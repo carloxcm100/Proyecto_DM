@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,6 +28,8 @@ public class Datosclientefactura extends AppCompatActivity {
 
     private DatabaseHelper databaseHelper;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,8 @@ public class Datosclientefactura extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 
+        sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+
         agregarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +69,7 @@ public class Datosclientefactura extends AppCompatActivity {
         regresar2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(Datosclientefactura.this, MainActivity.class);
+                Intent intent = new Intent(Datosclientefactura.this, Visualizar_orden.class);
                 startActivity(intent);
             }
         });
@@ -97,11 +102,7 @@ public class Datosclientefactura extends AppCompatActivity {
                         c.close();
                         db.close();
                     }
-
                 }
-
-
-
             }
         });
 
@@ -134,7 +135,11 @@ public class Datosclientefactura extends AppCompatActivity {
 
 
                 if (validarCampos(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor)) {
-                    guardarDatosConsumidor(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor,  correoconsumidor);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("CEDULA", cedularucconsumidor);
+                    editor.apply();
+                    Intent intent = new Intent(Datosclientefactura.this, FacturaActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -207,6 +212,7 @@ public class Datosclientefactura extends AppCompatActivity {
 
     private void actualizarDatosConsumidor(String cedularucconsumidor, String nombresconsumidor, String apellidosconsumidor, String direccionconsumidor, String telefonoconsumidor, String correoconsumidor) {
         final SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        String cedulacon = cedularucconsumidor;
 
         ContentValues values3 = new ContentValues();
         values3.put(DatabaseHelper.COLUMN_CEDULARUCCONSUMIDOR, cedularucconsumidor);
@@ -216,8 +222,7 @@ public class Datosclientefactura extends AppCompatActivity {
         values3.put(DatabaseHelper.COLUMN_TELEFONOCONSUMIDOR, telefonoconsumidor);
         values3.put(DatabaseHelper.COLUMN_CORREOCONSUMIDOR, correoconsumidor);
 
-
-        long resultado = db.insert(DatabaseHelper.TABLE_NAME3, null, values3);
+        long resultado = db.update(DatabaseHelper.TABLE_NAME3, values3, DatabaseHelper.COLUMN_CEDULARUCCONSUMIDOR + " = ?", new String[]{cedulacon});
 
         if (resultado != -1) {
             Toast.makeText(this, "Los datos del Cliente se actualizaron exitosamente", Toast.LENGTH_SHORT).show();
