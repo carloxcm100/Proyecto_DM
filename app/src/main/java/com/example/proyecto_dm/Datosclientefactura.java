@@ -23,7 +23,7 @@ public class Datosclientefactura extends AppCompatActivity {
     private EditText cedularucconsumidorEditText;
     private EditText correoconsumidorEditText;
     private EditText telefonoconsumidorEditText;
-    private Button generarButton, regresar2Button, buscarButton, actualizarButton;
+    private Button generarButton, regresar2Button, buscarButton, actualizarButton, agregarButton;
 
     private DatabaseHelper databaseHelper;
 
@@ -42,10 +42,11 @@ public class Datosclientefactura extends AppCompatActivity {
         regresar2Button = findViewById(R.id.regresar2Button);
         buscarButton = findViewById(R.id.buscarButton);
         actualizarButton = findViewById(R.id.actualizarButton);
+        agregarButton = findViewById(R.id.agregarButton);
 
         databaseHelper = new DatabaseHelper(this);
 
-        generarButton.setOnClickListener(new View.OnClickListener() {
+        agregarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String cedularucconsumidor = cedularucconsumidorEditText.getText().toString();
@@ -54,9 +55,6 @@ public class Datosclientefactura extends AppCompatActivity {
                 String direccionconsumidor = direccionconsumidorEditText.getText().toString();
                 String telefonoconsumidor = telefonoconsumidorEditText.getText().toString();
                 String correoconsumidor = correoconsumidorEditText.getText().toString();
-
-
-
                 if (validarCampos(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor)) {
                     guardarDatosConsumidor(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor,  correoconsumidor);
                 }
@@ -110,7 +108,34 @@ public class Datosclientefactura extends AppCompatActivity {
         actualizarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String cedularucconsumidor = cedularucconsumidorEditText.getText().toString();
+                String nombresconsumidor = nombresconsumidorEditText.getText().toString();
+                String apellidosconsumidor = apellidosconsumidorEditText.getText().toString();
+                String direccionconsumidor = direccionconsumidorEditText.getText().toString();
+                String telefonoconsumidor = telefonoconsumidorEditText.getText().toString();
+                String correoconsumidor = correoconsumidorEditText.getText().toString();
 
+                if (validarCampos(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor)) {
+                    actualizarDatosConsumidor(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor,  correoconsumidor);
+                }
+            }
+        });
+
+        generarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String cedularucconsumidor = cedularucconsumidorEditText.getText().toString();
+                String nombresconsumidor = nombresconsumidorEditText.getText().toString();
+                String apellidosconsumidor = apellidosconsumidorEditText.getText().toString();
+                String direccionconsumidor = direccionconsumidorEditText.getText().toString();
+                String telefonoconsumidor = telefonoconsumidorEditText.getText().toString();
+                String correoconsumidor = correoconsumidorEditText.getText().toString();
+
+
+
+                if (validarCampos(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor)) {
+                    guardarDatosConsumidor(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor,  correoconsumidor);
+                }
             }
         });
     }
@@ -165,9 +190,6 @@ public class Datosclientefactura extends AppCompatActivity {
 
         if (resultado != -1) {
             Toast.makeText(this, "Los datos del Cliente se guardaron exitosamente", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(Datosclientefactura.this, FacturaActivity.class);
-            startActivity(intent);
-            finish();
         } else {
             Toast.makeText(this, "Error al Guardar los datos", Toast.LENGTH_SHORT).show();
         }
@@ -181,5 +203,28 @@ public class Datosclientefactura extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    private void actualizarDatosConsumidor(String cedularucconsumidor, String nombresconsumidor, String apellidosconsumidor, String direccionconsumidor, String telefonoconsumidor, String correoconsumidor) {
+        final SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
+        ContentValues values3 = new ContentValues();
+        values3.put(DatabaseHelper.COLUMN_CEDULARUCCONSUMIDOR, cedularucconsumidor);
+        values3.put(DatabaseHelper.COLUMN_NOMBRESCONSUMIDOR, nombresconsumidor);
+        values3.put(DatabaseHelper.COLUMN_APELLIDOSCONSUMIDOR, apellidosconsumidor);
+        values3.put(DatabaseHelper.COLUMN_DIRECCIONCONSUMIDOR, direccionconsumidor);
+        values3.put(DatabaseHelper.COLUMN_TELEFONOCONSUMIDOR, telefonoconsumidor);
+        values3.put(DatabaseHelper.COLUMN_CORREOCONSUMIDOR, correoconsumidor);
+
+
+        long resultado = db.insert(DatabaseHelper.TABLE_NAME3, null, values3);
+
+        if (resultado != -1) {
+            Toast.makeText(this, "Los datos del Cliente se actualizaron exitosamente", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(this, "Error al Guardar los datos", Toast.LENGTH_SHORT).show();
+        }
+        db.close();
     }
 }

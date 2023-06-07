@@ -12,7 +12,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button cerrarSesionButton;
     private Button ayudaButton;
-
+    private Button datoscButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
                 cerrarSesion();
             }
         });
+
 
         ayudaButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 
     private void mostrarMensajeAyuda() {
         Toast.makeText(this, "El mesero está en camino", Toast.LENGTH_SHORT).show();
