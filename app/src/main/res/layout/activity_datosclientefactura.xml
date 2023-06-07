@@ -27,72 +27,81 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:text="Datos de la Factura"
-                android:textColor="@android:color/white"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:layout_height="342dp"
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/cedularucconsumidorEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@color/white"
-                android:hint="Cédula o R.U.C."
-                android:textColor="@android:color/black" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:text="Datos de la Factura"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/nombresconsumidorEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@color/white"
-                android:hint="Nombres"
-                android:textColor="@android:color/black" />
+                <EditText
+                    android:id="@+id/cedularucconsumidorEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    android:hint="Cédula o R.U.C."
+                    android:inputType="phone"
+                    android:textColor="@android:color/black" />
 
-            <EditText
-                android:id="@+id/apellidosconsumidorEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@color/white"
-                android:hint="Apellidos"
-                android:textColor="@android:color/black" />
+                <EditText
+                    android:id="@+id/nombresconsumidorEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    android:hint="Nombres"
+                    android:inputType="text"
+                    android:textColor="@android:color/black" />
 
-            <EditText
-                android:id="@+id/direccionconsumidorEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@color/white"
-                android:hint="Dirección"
-                android:inputType="text|textLongMessage"
-                android:textColor="@android:color/black" />
+                <EditText
+                    android:id="@+id/apellidosconsumidorEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    android:hint="Apellidos"
+                    android:inputType="text"
+                    android:textColor="@android:color/black" />
 
-            <EditText
-                android:id="@+id/telefonoconsumidorEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@color/white"
-                android:hint="Teléfono"
-                android:inputType="number"
-                android:textColor="@android:color/black" />
+                <EditText
+                    android:id="@+id/direccionconsumidorEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    android:hint="Dirección"
+                    android:inputType="text|textLongMessage"
+                    android:textColor="@android:color/black" />
 
-            <EditText
-                android:id="@+id/correoconsumidorEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@color/white"
-                android:hint="Correo electrónico"
-                android:inputType="textEmailAddress"
-                android:textColor="@android:color/black" />
+                <EditText
+                    android:id="@+id/telefonoconsumidorEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    android:hint="Teléfono"
+                    android:inputType="number"
+                    android:textColor="@android:color/black" />
+
+                <EditText
+                    android:id="@+id/correoconsumidorEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    android:hint="Correo electrónico"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -129,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="generarFactura"
-                android:text="Generar Factura" />
+                android:text="Factura" />
 
             <LinearLayout
                 android:layout_width="183dp"
