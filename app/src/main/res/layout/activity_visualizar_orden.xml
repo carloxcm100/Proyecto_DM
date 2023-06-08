@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".Visualizar_orden">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="497dp"
+        android:layout_height="833dp"
+        app:srcCompat="@drawable/fondo"
+        tools:layout_editor_absoluteX="-45dp"
+        tools:layout_editor_absoluteY="-51dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
