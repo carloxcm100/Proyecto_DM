@@ -18,6 +18,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USUARIO = "usuario";
     public static final String COLUMN_CONTRASEÑA = "contraseña";
 
+    public static final String TABLE_NAME3 = "consumidor";
+    public static final String COLUMN_IDCONSUMIDOR = "id";
+    public static final String COLUMN_CEDULARUCCONSUMIDOR = "cedularuc";
+    public static final String COLUMN_NOMBRESCONSUMIDOR = "nombresconsumidor";
+    public static final String COLUMN_APELLIDOSCONSUMIDOR = "apellidosconsumidor";
+    public static final String COLUMN_DIRECCIONCONSUMIDOR = "direccionconsumidor";
+    public static final String COLUMN_TELEFONOCONSUMIDOR = "telefonoconsumidor";
+    public static final String COLUMN_CORREOCONSUMIDOR = "correoconsumidor";
+
     private static final String CREATE_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME + " (" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             COLUMN_NOMBRES + " TEXT," +
@@ -29,13 +38,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_CONTRASEÑA + " TEXT" +
             ")";
 
+    private static final String CREATE_TABLE_QUERY3 = "CREATE TABLE " + TABLE_NAME3 + " (" +
+            COLUMN_IDCONSUMIDOR + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            COLUMN_CEDULARUCCONSUMIDOR + " TEXT," +
+            COLUMN_NOMBRESCONSUMIDOR + " TEXT," +
+            COLUMN_APELLIDOSCONSUMIDOR + " TEXT," +
+            COLUMN_DIRECCIONCONSUMIDOR + " TEXT," +
+            COLUMN_TELEFONOCONSUMIDOR + " TEXT," +
+            COLUMN_CORREOCONSUMIDOR + " TEXT" +
+            ")";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         db.execSQL(CREATE_TABLE_QUERY);
+
+        db.execSQL(CREATE_TABLE_QUERY3);
     }
 
     @Override

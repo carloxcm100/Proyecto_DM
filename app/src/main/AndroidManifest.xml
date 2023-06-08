@@ -16,6 +16,12 @@
         android:theme="@style/Theme.Proyecto_DM"
         tools:targetApi="31">
         <activity
+            android:name=".FacturaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Datosclientefactura"
+            android:exported="false" />
+        <activity
             android:name=".Visualizar_orden"
             android:exported="false" />
         <activity
