@@ -24,7 +24,11 @@ public class Datosclientefactura extends AppCompatActivity {
     private EditText cedularucconsumidorEditText;
     private EditText correoconsumidorEditText;
     private EditText telefonoconsumidorEditText;
-    private Button generarButton, regresar2Button, buscarButton, actualizarButton, agregarButton;
+    private Button generarButton;
+    private Button regresar2Button;
+    private Button buscarButton;
+    private Button actualizarButton;
+    private Button agregarButton;
 
     private DatabaseHelper databaseHelper;
 
