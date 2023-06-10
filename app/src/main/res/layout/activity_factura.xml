@@ -67,8 +67,15 @@
                 <TextView
                     android:id="@+id/faccedulaTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="32dp"
                     android:text="Cedula"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="tipo de pago"
                     android:visibility="visible" />
             </LinearLayout>
 

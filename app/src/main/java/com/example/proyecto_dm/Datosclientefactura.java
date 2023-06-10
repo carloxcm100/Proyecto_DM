@@ -24,6 +24,7 @@ public class Datosclientefactura extends AppCompatActivity {
     private EditText cedularucconsumidorEditText;
     private EditText correoconsumidorEditText;
     private EditText telefonoconsumidorEditText;
+    private EditText formadepagoEditText;
     private Button generarButton;
     private Button regresar2Button;
     private Button buscarButton;
@@ -47,13 +48,13 @@ public class Datosclientefactura extends AppCompatActivity {
         direccionconsumidorEditText = findViewById(R.id.direccionconsumidorEditText);
         correoconsumidorEditText = findViewById(R.id.correoconsumidorEditText);
         cedularucconsumidorEditText = findViewById(R.id.cedularucconsumidorEditText);
+        formadepagoEditText = findViewById(R.id.formadepagoEditText);
         generarButton = findViewById(R.id.generarFacturaButton);
         regresar2Button = findViewById(R.id.regresar2Button);
         buscarButton = findViewById(R.id.buscarButton);
         actualizarButton = findViewById(R.id.actualizarButton);
         agregarButton = findViewById(R.id.agregarButton);
         eliminarButton = findViewById(R.id.btn_eliminar);
-
 
         databaseHelper = new DatabaseHelper(this);
 
@@ -163,6 +164,8 @@ public class Datosclientefactura extends AppCompatActivity {
                             mensaje4();
                         }
 
+                    }else{
+                        mensaje5();
                     }
                 }
 
@@ -175,15 +178,12 @@ public class Datosclientefactura extends AppCompatActivity {
                 String cedularucconsumidor = cedularucconsumidorEditText.getText().toString();
                 String nombresconsumidor = nombresconsumidorEditText.getText().toString();
                 String apellidosconsumidor = apellidosconsumidorEditText.getText().toString();
-                String direccionconsumidor = direccionconsumidorEditText.getText().toString();
-                String telefonoconsumidor = telefonoconsumidorEditText.getText().toString();
-                String correoconsumidor = correoconsumidorEditText.getText().toString();
+                String formadepago = formadepagoEditText.getText().toString();
 
-
-
-                if (validarCampos(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor)) {
+                if (validarCamposfac(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, formadepago)) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("CEDULA", cedularucconsumidor);
+                    editor.putString("FORMAPAGO", cedularucconsumidor);
                     editor.apply();
                     Intent intent = new Intent(Datosclientefactura.this, FacturaActivity.class);
                     startActivity(intent);
@@ -192,6 +192,32 @@ public class Datosclientefactura extends AppCompatActivity {
         });
     }
 
+    private void mensaje5() {
+        Toast.makeText(this, "La base de datos esta vacia", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean validarCamposfac(String cedularucconsumidor, String nombresconsumidor, String apellidosconsumidor, String formadepago) {
+        if (TextUtils.isEmpty(cedularucconsumidor) || !cedularucconsumidor.matches("[0-9]+") || cedularucconsumidor.length() <= 9 || cedularucconsumidor.length() > 15) {
+            Toast.makeText(this, "Ingrese una cédula o R.U.C. válido (solo números, entre 10 y 15 caracteres)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (TextUtils.isEmpty(nombresconsumidor) || !nombresconsumidor.matches("[a-zA-Z ]+") || nombresconsumidor.length() > 30) {
+            Toast.makeText(this, "Ingrese un nombre válido (solo letras y espacios, máximo 30 caracteres)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (TextUtils.isEmpty(apellidosconsumidor) || !apellidosconsumidor.matches("[a-zA-Z ]+") || apellidosconsumidor.length() > 30) {
+            Toast.makeText(this, "Ingrese un apellido válido (solo letras y espacios, máximo 30 caracteres)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (TextUtils.isEmpty(formadepago) || !formadepago.matches("[a-zA-Z ]+") || formadepago.length() > 30) {
+            Toast.makeText(this, "Ingrese una forma de pago válida (solo letras y espacios, máximo 30 caracteres)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
 
 
     private void mensaje4() {
@@ -209,7 +235,7 @@ public class Datosclientefactura extends AppCompatActivity {
     private boolean verificarcedulaexiste(String cedula) {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         String[] columns = {"cedularuc"};
-        String selection = "cedularuc = ?";
+        String selection = "cedularuc= ?";
         String[] selectionArgs = {cedula};
 
         Cursor cursor = db.query("consumidor", columns, selection, selectionArgs, null, null, null);
