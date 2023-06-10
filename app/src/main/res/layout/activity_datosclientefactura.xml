@@ -29,7 +29,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="342dp"
+                android:layout_height="374dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -101,6 +101,17 @@
                     android:hint="Correo electrónico"
                     android:inputType="textEmailAddress"
                     android:textColor="@android:color/black" />
+
+                <EditText
+                    android:id="@+id/formadepagoEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    android:hint="Forma Pago"
+                    android:inputType="text"
+                    android:textColor="@android:color/black" />
+
             </LinearLayout>
 
             <LinearLayout

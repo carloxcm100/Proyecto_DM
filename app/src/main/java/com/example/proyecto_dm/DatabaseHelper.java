@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_NAME3 = "consumidor";
     public static final String COLUMN_IDCONSUMIDOR = "id";
-    public static final String COLUMN_CEDULARUCCONSUMIDOR = "cedularuc";
+    public static final String COLUMN_CEDULARUCCONSUMIDOR = "cedula";
     public static final String COLUMN_NOMBRESCONSUMIDOR = "nombresconsumidor";
     public static final String COLUMN_APELLIDOSCONSUMIDOR = "apellidosconsumidor";
     public static final String COLUMN_DIRECCIONCONSUMIDOR = "direccionconsumidor";

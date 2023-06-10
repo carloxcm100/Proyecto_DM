@@ -30,6 +30,8 @@ public class Datosclientefactura extends AppCompatActivity {
     private Button actualizarButton;
     private Button agregarButton;
 
+    private Button eliminarButton;
+
     private DatabaseHelper databaseHelper;
 
     private SharedPreferences sharedPreferences;
@@ -50,6 +52,8 @@ public class Datosclientefactura extends AppCompatActivity {
         buscarButton = findViewById(R.id.buscarButton);
         actualizarButton = findViewById(R.id.actualizarButton);
         agregarButton = findViewById(R.id.agregarButton);
+        eliminarButton = findViewById(R.id.btn_eliminar);
+
 
         databaseHelper = new DatabaseHelper(this);
 
@@ -58,14 +62,21 @@ public class Datosclientefactura extends AppCompatActivity {
         agregarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String cedularucconsumidor = cedularucconsumidorEditText.getText().toString();
-                String nombresconsumidor = nombresconsumidorEditText.getText().toString();
-                String apellidosconsumidor = apellidosconsumidorEditText.getText().toString();
-                String direccionconsumidor = direccionconsumidorEditText.getText().toString();
-                String telefonoconsumidor = telefonoconsumidorEditText.getText().toString();
-                String correoconsumidor = correoconsumidorEditText.getText().toString();
-                if (validarCampos(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor)) {
-                    guardarDatosConsumidor(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor,  correoconsumidor);
+                String cedula = cedularucconsumidorEditText.getText().toString();
+                boolean cedulaexiste = verificarcedulaexiste(cedula);
+
+                if (cedulaexiste) {
+                    mensaje2();
+                } else {
+                    String cedularucconsumidor = cedularucconsumidorEditText.getText().toString();
+                    String nombresconsumidor = nombresconsumidorEditText.getText().toString();
+                    String apellidosconsumidor = apellidosconsumidorEditText.getText().toString();
+                    String direccionconsumidor = direccionconsumidorEditText.getText().toString();
+                    String telefonoconsumidor = telefonoconsumidorEditText.getText().toString();
+                    String correoconsumidor = correoconsumidorEditText.getText().toString();
+                    if (validarCampos(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor)) {
+                        guardarDatosConsumidor(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor);
+                    }
                 }
             }
         });
@@ -84,18 +95,17 @@ public class Datosclientefactura extends AppCompatActivity {
             public void onClick(View v) {
                 String cedularucconsumidor = cedularucconsumidorEditText.getText().toString();
                 final SQLiteDatabase db = databaseHelper.getReadableDatabase();
-                if(db != null){
-                    EditText cedularucconsumidortemp = (EditText)findViewById(R.id.cedularucconsumidorEditText);
-                    EditText nombresconsumidortemp = (EditText)findViewById(R.id.nombresconsumidorEditText);
-                    EditText apellidosconsumidortemp = (EditText)findViewById(R.id.apellidosconsumidorEditText);
-                    EditText telefonoconsumidortemp = (EditText)findViewById(R.id.telefonoconsumidorEditText);
-                    EditText direccionconsumidortemp = (EditText)findViewById(R.id.direccionconsumidorEditText);
-                    EditText correoconsumidortemp = (EditText)findViewById(R.id.correoconsumidorEditText);
+                if (db != null) {
+                    EditText cedularucconsumidortemp = findViewById(R.id.cedularucconsumidorEditText);
+                    EditText nombresconsumidortemp = findViewById(R.id.nombresconsumidorEditText);
+                    EditText apellidosconsumidortemp = findViewById(R.id.apellidosconsumidorEditText);
+                    EditText telefonoconsumidortemp = findViewById(R.id.telefonoconsumidorEditText);
+                    EditText direccionconsumidortemp = findViewById(R.id.direccionconsumidorEditText);
+                    EditText correoconsumidortemp = findViewById(R.id.correoconsumidorEditText);
 
-                    if(validarcedula(cedularucconsumidor)){
-                        Cursor c = db.rawQuery("SELECT  cedularuc, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor FROM consumidor WHERE cedularuc =" + cedularucconsumidor, null);
-                        if(c != null){
-                            c.moveToFirst();
+                    if (validarcedula(cedularucconsumidor)) {
+                        Cursor c = db.rawQuery("SELECT cedularuc, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor FROM consumidor WHERE cedularuc = '" + cedularucconsumidor + "'", null);
+                        if (c != null && c.moveToFirst()) {
                             cedularucconsumidortemp.setText(c.getString(c.getColumnIndex("cedularuc")).toString());
                             nombresconsumidortemp.setText(c.getString(c.getColumnIndex("nombresconsumidor")).toString());
                             apellidosconsumidortemp.setText(c.getString(c.getColumnIndex("apellidosconsumidor")).toString());
@@ -103,7 +113,9 @@ public class Datosclientefactura extends AppCompatActivity {
                             telefonoconsumidortemp.setText(c.getString(c.getColumnIndex("telefonoconsumidor")).toString());
                             correoconsumidortemp.setText(c.getString(c.getColumnIndex("correoconsumidor")).toString());
                         }
-                        c.close();
+                        if (c != null) {
+                            c.close();
+                        }
                         db.close();
                     }
                 }
@@ -113,16 +125,47 @@ public class Datosclientefactura extends AppCompatActivity {
         actualizarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String cedularucconsumidor = cedularucconsumidorEditText.getText().toString();
-                String nombresconsumidor = nombresconsumidorEditText.getText().toString();
-                String apellidosconsumidor = apellidosconsumidorEditText.getText().toString();
-                String direccionconsumidor = direccionconsumidorEditText.getText().toString();
-                String telefonoconsumidor = telefonoconsumidorEditText.getText().toString();
-                String correoconsumidor = correoconsumidorEditText.getText().toString();
+                String cedula = cedularucconsumidorEditText.getText().toString();
+                boolean cedulaexiste = verificarcedulaexiste(cedula);
 
-                if (validarCampos(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor)) {
-                    actualizarDatosConsumidor(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor,  correoconsumidor);
+                if (cedulaexiste) {
+                    String cedularucconsumidor = cedularucconsumidorEditText.getText().toString();
+                    String nombresconsumidor = nombresconsumidorEditText.getText().toString();
+                    String apellidosconsumidor = apellidosconsumidorEditText.getText().toString();
+                    String direccionconsumidor = direccionconsumidorEditText.getText().toString();
+                    String telefonoconsumidor = telefonoconsumidorEditText.getText().toString();
+                    String correoconsumidor = correoconsumidorEditText.getText().toString();
+
+                    if (validarCampos(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor)) {
+                        actualizarDatosConsumidor(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor);
+                    }
+                } else {
+                    mensaje3();
                 }
+            }
+        });
+
+        eliminarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String cedula = cedularucconsumidorEditText.getText().toString();
+                if (validarcedula(cedula)) {
+
+                    boolean cedulaexiste = verificarcedulaexiste(cedula);
+
+                    final SQLiteDatabase db = databaseHelper.getReadableDatabase();
+                    if (db != null) {
+                        if (cedulaexiste) {
+
+                            eliminarPorCedula(cedula);
+
+                        } else {
+                            mensaje4();
+                        }
+
+                    }
+                }
+
             }
         });
 
@@ -149,6 +192,43 @@ public class Datosclientefactura extends AppCompatActivity {
         });
     }
 
+
+
+    private void mensaje4() {
+        Toast.makeText(this, "La cédula no está registrada no se puede eliminar de la base de datos", Toast.LENGTH_SHORT).show();
+    }
+
+    private void mensaje3() {
+        Toast.makeText(this, "La cédula no está registrada no se puede actualizar los datos", Toast.LENGTH_SHORT).show();
+    }
+
+    private void mensaje2() {
+        Toast.makeText(this, "La cédula ya está registrada no se puede volver a registrar", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean verificarcedulaexiste(String cedula) {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        String[] columns = {"cedularuc"};
+        String selection = "cedularuc = ?";
+        String[] selectionArgs = {cedula};
+
+        Cursor cursor = db.query("consumidor", columns, selection, selectionArgs, null, null, null);
+
+        boolean cedulaExiste = false;
+
+        if (cursor != null && cursor.moveToFirst()) {
+            cedulaExiste = true;
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        db.close();
+
+        return cedulaExiste;
+    }
+
     private boolean validarCampos(String cedularucconsumidor, String nombresconsumidor, String apellidosconsumidor, String direccionconsumidor, String telefonoconsumidor, String correoconsumidor) {
         if (TextUtils.isEmpty(cedularucconsumidor) || !cedularucconsumidor.matches("[0-9]+") || cedularucconsumidor.length() <= 9 || cedularucconsumidor.length() > 15) {
             Toast.makeText(this, "Ingrese una cédula o R.U.C. válido (solo números, entre 10 y 15 caracteres)", Toast.LENGTH_SHORT).show();
@@ -156,12 +236,12 @@ public class Datosclientefactura extends AppCompatActivity {
         }
 
         if (TextUtils.isEmpty(nombresconsumidor) || !nombresconsumidor.matches("[a-zA-Z ]+") || nombresconsumidor.length() > 30) {
-            Toast.makeText(this, "Ingrese un nombre válido (solo letras y espacios, máximo 40 caracteres)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Ingrese un nombre válido (solo letras y espacios, máximo 30 caracteres)", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (TextUtils.isEmpty(apellidosconsumidor) || !apellidosconsumidor.matches("[a-zA-Z ]+") || apellidosconsumidor.length() > 30) {
-            Toast.makeText(this, "Ingrese un apellido válido (solo letras y espacios, máximo 40 caracteres)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Ingrese un apellido válido (solo letras y espacios, máximo 30 caracteres)", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -171,7 +251,7 @@ public class Datosclientefactura extends AppCompatActivity {
         }
 
         if (TextUtils.isEmpty(telefonoconsumidor) || !telefonoconsumidor.matches("[0-9]+") || telefonoconsumidor.length() <= 9 || telefonoconsumidor.length() > 11) {
-            Toast.makeText(this, "Ingrese un numero telefonicó válido (solo números, maximó 10 caracteres)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Ingrese un número telefónico válido (solo números, máximo 10 caracteres)", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -183,11 +263,11 @@ public class Datosclientefactura extends AppCompatActivity {
         return true;
     }
 
-    private void guardarDatosConsumidor(String cedularucconsumidor, String nombresconsumidor, String apellidosconsumidor, String direccionconsumidor, String telefonoconsumidor, String correoconsumidor) {
+    private void guardarDatosConsumidor(String cedula, String nombresconsumidor, String apellidosconsumidor, String direccionconsumidor, String telefonoconsumidor, String correoconsumidor) {
         final SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
         ContentValues values3 = new ContentValues();
-        values3.put(DatabaseHelper.COLUMN_CEDULARUCCONSUMIDOR, cedularucconsumidor);
+        values3.put(DatabaseHelper.COLUMN_CEDULARUCCONSUMIDOR, cedula);
         values3.put(DatabaseHelper.COLUMN_NOMBRESCONSUMIDOR, nombresconsumidor);
         values3.put(DatabaseHelper.COLUMN_APELLIDOSCONSUMIDOR, apellidosconsumidor);
         values3.put(DatabaseHelper.COLUMN_DIRECCIONCONSUMIDOR, direccionconsumidor);
@@ -230,10 +310,28 @@ public class Datosclientefactura extends AppCompatActivity {
 
         if (resultado != -1) {
             Toast.makeText(this, "Los datos del Cliente se actualizaron exitosamente", Toast.LENGTH_SHORT).show();
-            finish();
+            finish(); // Cerrar la actividad
         } else {
-            Toast.makeText(this, "Error al Guardar los datos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show();
         }
+
         db.close();
+    }
+
+    private void eliminarPorCedula(String cedula) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        String whereClause = "cedularuc = ?";
+        String[] whereArgs = {cedula};
+        int resultado = db.delete("consumidor", whereClause, whereArgs);
+
+        Toast.makeText(this, "Registro eliminado exitosamente", Toast.LENGTH_SHORT).show();
+
+        db.close();
+
+        if (resultado > 0) {
+            Toast.makeText(this, "Registro eliminado exitosamente", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Ocurrio un error al  eliminar", Toast.LENGTH_SHORT).show();
+        }
     }
 }
