@@ -12,7 +12,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button cerrarSesionButton;
     private Button ayudaButton;
-    private Button datoscButton;
+    private Button datosfacturaButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
 
         cerrarSesionButton = findViewById(R.id.cerrarSesionButton);
         ayudaButton = findViewById(R.id.ayudaButton);
+        datosfacturaButton = findViewById(R.id.datosfacturaButton);
 
         cerrarSesionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +34,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mostrarMensajeAyuda();
+            }
+        });
+
+        datosfacturaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, Datosclientefactura.class);
+                startActivity(intent);
             }
         });
     }
