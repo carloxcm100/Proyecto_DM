@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 public class Datosclientefactura extends AppCompatActivity {
 
-
     private EditText nombresconsumidorEditText;
     private EditText apellidosconsumidorEditText;
     private EditText direccionconsumidorEditText;
@@ -25,13 +24,14 @@ public class Datosclientefactura extends AppCompatActivity {
     private EditText correoconsumidorEditText;
     private EditText telefonoconsumidorEditText;
     private EditText formadepagoEditText;
+    private EditText numerocomandaEditText;
     private Button generarButton;
     private Button regresar2Button;
     private Button buscarButton;
     private Button actualizarButton;
     private Button agregarButton;
-
     private Button eliminarButton;
+    private Button limpiarcamposButton;
 
     private DatabaseHelper databaseHelper;
 
@@ -55,6 +55,7 @@ public class Datosclientefactura extends AppCompatActivity {
         actualizarButton = findViewById(R.id.actualizarButton);
         agregarButton = findViewById(R.id.agregarButton);
         eliminarButton = findViewById(R.id.btn_eliminar);
+        limpiarcamposButton = findViewById(R.id.btn_limpiarcampos);
 
         databaseHelper = new DatabaseHelper(this);
 
@@ -113,7 +114,10 @@ public class Datosclientefactura extends AppCompatActivity {
                             direccionconsumidortemp.setText(c.getString(c.getColumnIndex("direccionconsumidor")).toString());
                             telefonoconsumidortemp.setText(c.getString(c.getColumnIndex("telefonoconsumidor")).toString());
                             correoconsumidortemp.setText(c.getString(c.getColumnIndex("correoconsumidor")).toString());
+                        }else{
+                            mensaje7();
                         }
+
                         if (c != null) {
                             c.close();
                         }
@@ -160,6 +164,8 @@ public class Datosclientefactura extends AppCompatActivity {
 
                             eliminarPorCedula(cedula);
 
+                            limpiarcampos();
+
                         } else {
                             mensaje4();
                         }
@@ -172,6 +178,13 @@ public class Datosclientefactura extends AppCompatActivity {
             }
         });
 
+        limpiarcamposButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                limpiarcampos();
+            }
+        });
+
         generarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,11 +192,13 @@ public class Datosclientefactura extends AppCompatActivity {
                 String nombresconsumidor = nombresconsumidorEditText.getText().toString();
                 String apellidosconsumidor = apellidosconsumidorEditText.getText().toString();
                 String formadepago = formadepagoEditText.getText().toString();
+                String numerocomanda = numerocomandaEditText.getText().toString();
 
-                if (validarCamposfac(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, formadepago)) {
+                if (validarCamposfac(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, formadepago, numerocomanda)) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("CEDULA", cedularucconsumidor);
-                    editor.putString("FORMAPAGO", cedularucconsumidor);
+                    editor.putString("FORMAPAGO", formadepago);
+                    editor.putString("COMANDA", numerocomanda);
                     editor.apply();
                     Intent intent = new Intent(Datosclientefactura.this, FacturaActivity.class);
                     startActivity(intent);
@@ -192,11 +207,35 @@ public class Datosclientefactura extends AppCompatActivity {
         });
     }
 
+    private void limpiarcampos() {
+        EditText cedularucconsumidortemp = findViewById(R.id.cedularucconsumidorEditText);
+        EditText nombresconsumidortemp = findViewById(R.id.nombresconsumidorEditText);
+        EditText apellidosconsumidortemp = findViewById(R.id.apellidosconsumidorEditText);
+        EditText telefonoconsumidortemp = findViewById(R.id.telefonoconsumidorEditText);
+        EditText direccionconsumidortemp = findViewById(R.id.direccionconsumidorEditText);
+        EditText correoconsumidortemp = findViewById(R.id.correoconsumidorEditText);
+        EditText formapagotemp = findViewById(R.id.formadepagoEditText);
+        EditText numerocomandatemp = findViewById(R.id.numerocomandaEditText);
+
+        cedularucconsumidortemp.setText("");
+        nombresconsumidortemp.setText("");
+        apellidosconsumidortemp.setText("");
+        direccionconsumidortemp.setText("");
+        telefonoconsumidortemp.setText("");
+        correoconsumidortemp.setText("");
+        formapagotemp.setText("");
+        numerocomandatemp.setText("");
+    }
+
+    private void mensaje7() {
+        Toast.makeText(this, "La Cedula no se encuentra registrada en la base de datos procesada a resgitrar", Toast.LENGTH_SHORT).show();
+    }
+
     private void mensaje5() {
         Toast.makeText(this, "La base de datos esta vacia", Toast.LENGTH_SHORT).show();
     }
 
-    private boolean validarCamposfac(String cedularucconsumidor, String nombresconsumidor, String apellidosconsumidor, String formadepago) {
+    private boolean validarCamposfac(String cedularucconsumidor, String nombresconsumidor, String apellidosconsumidor, String formadepago, String numerocomanda) {
         if (TextUtils.isEmpty(cedularucconsumidor) || !cedularucconsumidor.matches("[0-9]+") || cedularucconsumidor.length() <= 9 || cedularucconsumidor.length() > 15) {
             Toast.makeText(this, "Ingrese una cédula o R.U.C. válido (solo números, entre 10 y 15 caracteres)", Toast.LENGTH_SHORT).show();
             return false;
@@ -214,6 +253,11 @@ public class Datosclientefactura extends AppCompatActivity {
 
         if (TextUtils.isEmpty(formadepago) || !formadepago.matches("[a-zA-Z ]+") || formadepago.length() > 30) {
             Toast.makeText(this, "Ingrese una forma de pago válida (solo letras y espacios, máximo 30 caracteres)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (TextUtils.isEmpty(numerocomanda) || !numerocomanda.matches("[0-9]+") || numerocomanda.length() <= 9 || numerocomanda.length() > 11) {
+            Toast.makeText(this, "Ingrese un número de comanda válido (solo números, máximo 10 caracteres)", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -300,7 +344,6 @@ public class Datosclientefactura extends AppCompatActivity {
         values3.put(DatabaseHelper.COLUMN_TELEFONOCONSUMIDOR, telefonoconsumidor);
         values3.put(DatabaseHelper.COLUMN_CORREOCONSUMIDOR, correoconsumidor);
 
-
         long resultado = db.insert(DatabaseHelper.TABLE_NAME3, null, values3);
 
         if (resultado != -1) {
@@ -335,13 +378,19 @@ public class Datosclientefactura extends AppCompatActivity {
         long resultado = db.update(DatabaseHelper.TABLE_NAME3, values3, DatabaseHelper.COLUMN_CEDULARUCCONSUMIDOR + " = ?", new String[]{cedulacon});
 
         if (resultado != -1) {
-            Toast.makeText(this, "Los datos del Cliente se actualizaron exitosamente", Toast.LENGTH_SHORT).show();
-            finish(); // Cerrar la actividad
+            mensaje1();
         } else {
-            Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show();
+            mensaje6();
         }
-
         db.close();
+    }
+
+    private void mensaje6() {
+        Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show();
+    }
+
+    private void mensaje1() {
+        Toast.makeText(this, "Los datos del Cliente se actualizaron exitosamente", Toast.LENGTH_SHORT).show();
     }
 
     private void eliminarPorCedula(String cedula) {

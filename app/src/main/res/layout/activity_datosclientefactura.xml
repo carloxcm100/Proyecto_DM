@@ -29,7 +29,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="374dp"
+                android:layout_height="414dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -112,6 +112,16 @@
                     android:inputType="text"
                     android:textColor="@android:color/black" />
 
+                <EditText
+                    android:id="@+id/numerocomandaEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    android:hint="Nº Comanda"
+                    android:inputType="text"
+                    android:textColor="@android:color/black" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -144,11 +154,24 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_eliminar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Eliminar" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="71dp"
+                android:gravity="center|center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_eliminar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Eliminar" />
+
+                <Button
+                    android:id="@+id/btn_limpiarcampos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Limpiar Campos" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/generarFacturaButton"
