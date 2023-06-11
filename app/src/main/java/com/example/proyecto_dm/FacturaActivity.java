@@ -16,7 +16,7 @@ public class FacturaActivity extends AppCompatActivity {
     private TextView nombrefacTextView;
     private TextView apellidofacTextView;
     private TextView fechatextView;
-    //private TextView tipodepagoTextView;
+    private TextView tipopagotextView;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -28,6 +28,7 @@ public class FacturaActivity extends AppCompatActivity {
         nombrefacTextView = findViewById(R.id.nombrefacTextView);
         apellidofacTextView = findViewById(R.id.apellidofacTextView);
         fechatextView = findViewById(R.id.fechatextView);
+        tipopagotextView = findViewById(R.id.tipopagotextView);
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
 
         // Obtener el número de cédula guardado en SharedPreferences
@@ -39,6 +40,7 @@ public class FacturaActivity extends AppCompatActivity {
         faccedulaTextView.setText(cedula);
         nombrefacTextView.setText(nombrefac);
         apellidofacTextView.setText(apellidofac);
+        tipopagotextView.setText(formapago);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
         String fechaActual = dateFormat.format(new Date());
         fechatextView.setText(fechaActual);
