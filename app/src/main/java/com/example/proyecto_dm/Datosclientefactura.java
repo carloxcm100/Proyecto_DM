@@ -49,6 +49,7 @@ public class Datosclientefactura extends AppCompatActivity {
         correoconsumidorEditText = findViewById(R.id.correoconsumidorEditText);
         cedularucconsumidorEditText = findViewById(R.id.cedularucconsumidorEditText);
         formadepagoEditText = findViewById(R.id.formadepagoEditText);
+        numerocomandaEditText = findViewById(R.id.numerocomandaEditText);
         generarButton = findViewById(R.id.generarFacturaButton);
         regresar2Button = findViewById(R.id.regresar2Button);
         buscarButton = findViewById(R.id.buscarButton);
@@ -197,8 +198,11 @@ public class Datosclientefactura extends AppCompatActivity {
                 if (validarCamposfac(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, formadepago, numerocomanda)) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("CEDULA", cedularucconsumidor);
+                    editor.putString("NOMBRE",nombresconsumidor);
+                    editor.putString("APELLIDO",apellidosconsumidor);
                     editor.putString("FORMAPAGO", formadepago);
                     editor.putString("COMANDA", numerocomanda);
+
                     editor.apply();
                     Intent intent = new Intent(Datosclientefactura.this, FacturaActivity.class);
                     startActivity(intent);
@@ -256,7 +260,7 @@ public class Datosclientefactura extends AppCompatActivity {
             return false;
         }
 
-        if (TextUtils.isEmpty(numerocomanda) || !numerocomanda.matches("[0-9]+") || numerocomanda.length() <= 9 || numerocomanda.length() > 11) {
+        if (TextUtils.isEmpty(numerocomanda) || !numerocomanda.matches("[0-9]+") || numerocomanda.length() <= 0 || numerocomanda.length() > 11) {
             Toast.makeText(this, "Ingrese un número de comanda válido (solo números, máximo 10 caracteres)", Toast.LENGTH_SHORT).show();
             return false;
         }
