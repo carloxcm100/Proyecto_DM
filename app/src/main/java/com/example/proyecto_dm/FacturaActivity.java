@@ -14,6 +14,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FacturaActivity extends AppCompatActivity {
 
@@ -52,6 +54,8 @@ public class FacturaActivity extends AppCompatActivity {
         //numerocomandafacTextView = findViewById(R.id.numerocomandafactextView);
         /*tlafactura = findViewById(R.id.tlfactura);*/
         tlfactura = findViewById(R.id.tlfactura);
+        // Obtener la fecha y hora actual
+        Date fechaActual = new Date();
 
         btn_enviarcorreo = findViewById(R.id.btn_enviarcorreo);
         btn_imprimir = findViewById(R.id.btn_imprimir);
@@ -60,6 +64,10 @@ public class FacturaActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
 
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+
+        // Formatear la fecha y hora actual en el formato deseado
+        SimpleDateFormat formatoFechaHora = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String fechaHoraFormateada = formatoFechaHora.format(fechaActual);
 
         // Obtener el número de cédula guardado en SharedPreferences
         String cedula = sharedPreferences.getString("CEDULA", "");
@@ -100,6 +108,8 @@ public class FacturaActivity extends AppCompatActivity {
             telefonofactTextView.setText(telefono);
             correofactextView.setText(correo);
             tipopagotextView.setText(formapago);
+            // Establecer la fecha y hora formateadas en el fechatextView
+            fechatextView.setText(fechaHoraFormateada);
         }
 
         // Cierra el cursor

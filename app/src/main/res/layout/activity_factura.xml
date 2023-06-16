@@ -300,7 +300,7 @@
                             android:id="@+id/textView11"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".25"
+                            android:layout_weight=".40"
                             android:text="Nombre"
                             android:textStyle="bold" />
 
@@ -309,7 +309,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight=".25"
-                            android:text="Cantidad"
+                            android:text="Precio"
                             android:textAlignment="center"
                             android:textStyle="bold" />
 
@@ -317,7 +317,7 @@
                             android:id="@+id/textView9"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".25"
+                            android:layout_weight=".10"
                             android:text="Cantidad"
                             android:textAlignment="center"
                             android:textStyle="bold" />
@@ -342,7 +342,7 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="380dp"
+                        android:layout_height="352dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -357,7 +357,6 @@
                             android:id="@+id/tlfactura"
                             android:layout_width="387dp"
                             android:layout_height="356dp">
-
 
 
                         </TableLayout>
@@ -375,7 +374,7 @@
                     <TextView
                         android:id="@+id/textView24"
                         android:layout_width="match_parent"
-                        android:layout_height="2dp"
+                        android:layout_height="24dp"
                         android:text="=====================================================================================================================================" />
 
                     <LinearLayout
