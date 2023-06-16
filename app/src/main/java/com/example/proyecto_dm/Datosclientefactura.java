@@ -1,6 +1,7 @@
 package com.example.proyecto_dm;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -10,9 +11,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 public class Datosclientefactura extends AppCompatActivity {
@@ -28,9 +33,8 @@ public class Datosclientefactura extends AppCompatActivity {
     private Button generarButton;
     private Button regresar2Button;
     private Button buscarButton;
-    private Button actualizarButton;
     private Button agregarButton;
-    private Button eliminarButton;
+
     private Button limpiarcamposButton;
 
     private DatabaseHelper databaseHelper;
@@ -53,14 +57,17 @@ public class Datosclientefactura extends AppCompatActivity {
         generarButton = findViewById(R.id.generarFacturaButton);
         regresar2Button = findViewById(R.id.regresar2Button);
         buscarButton = findViewById(R.id.buscarButton);
-        actualizarButton = findViewById(R.id.actualizarButton);
         agregarButton = findViewById(R.id.agregarButton);
-        eliminarButton = findViewById(R.id.btn_eliminar);
         limpiarcamposButton = findViewById(R.id.btn_limpiarcampos);
+
+        Toolbar toolbar = findViewById(R.id.toolbarfac);
+        setSupportActionBar(toolbar);
 
         databaseHelper = new DatabaseHelper(this);
 
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+
+
 
         agregarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,57 +135,6 @@ public class Datosclientefactura extends AppCompatActivity {
             }
         });
 
-        actualizarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String cedula = cedularucconsumidorEditText.getText().toString();
-                boolean cedulaexiste = verificarcedulaexiste(cedula);
-
-                if (cedulaexiste) {
-                    String cedularucconsumidor = cedularucconsumidorEditText.getText().toString();
-                    String nombresconsumidor = nombresconsumidorEditText.getText().toString();
-                    String apellidosconsumidor = apellidosconsumidorEditText.getText().toString();
-                    String direccionconsumidor = direccionconsumidorEditText.getText().toString();
-                    String telefonoconsumidor = telefonoconsumidorEditText.getText().toString();
-                    String correoconsumidor = correoconsumidorEditText.getText().toString();
-
-                    if (validarCampos(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor)) {
-                        actualizarDatosConsumidor(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor);
-                    }
-                } else {
-                    mensaje3();
-                }
-            }
-        });
-
-        eliminarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String cedula = cedularucconsumidorEditText.getText().toString();
-                if (validarcedula(cedula)) {
-
-                    boolean cedulaexiste = verificarcedulaexiste(cedula);
-
-                    final SQLiteDatabase db = databaseHelper.getReadableDatabase();
-                    if (db != null) {
-                        if (cedulaexiste) {
-
-                            eliminarPorCedula(cedula);
-
-                            limpiarcampos();
-
-                        } else {
-                            mensaje4();
-                        }
-
-                    }else{
-                        mensaje5();
-                    }
-                }
-
-            }
-        });
-
         limpiarcamposButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,16 +146,17 @@ public class Datosclientefactura extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String cedularucconsumidor = cedularucconsumidorEditText.getText().toString();
-                String nombresconsumidor = nombresconsumidorEditText.getText().toString();
-                String apellidosconsumidor = apellidosconsumidorEditText.getText().toString();
+                //String nombresconsumidor = nombresconsumidorEditText.getText().toString();
+                //String apellidosconsumidor = apellidosconsumidorEditText.getText().toString();
                 String formadepago = formadepagoEditText.getText().toString();
                 String numerocomanda = numerocomandaEditText.getText().toString();
 
-                if (validarCamposfac(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, formadepago, numerocomanda)) {
+                //if (validarCamposfac(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, formadepago, numerocomanda)) {
+                if (validarCamposfac(cedularucconsumidor, formadepago, numerocomanda)) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("CEDULA", cedularucconsumidor);
-                    editor.putString("NOMBRE",nombresconsumidor);
-                    editor.putString("APELLIDO",apellidosconsumidor);
+                    //editor.putString("NOMBRE",nombresconsumidor);
+                    //editor.putString("APELLIDO",apellidosconsumidor);
                     editor.putString("FORMAPAGO", formadepago);
                     editor.putString("COMANDA", numerocomanda);
 
@@ -239,13 +196,14 @@ public class Datosclientefactura extends AppCompatActivity {
         Toast.makeText(this, "La base de datos esta vacia", Toast.LENGTH_SHORT).show();
     }
 
-    private boolean validarCamposfac(String cedularucconsumidor, String nombresconsumidor, String apellidosconsumidor, String formadepago, String numerocomanda) {
+    //private boolean validarCamposfac(String cedularucconsumidor, String nombresconsumidor, String apellidosconsumidor, String formadepago, String numerocomanda) {
+    private boolean validarCamposfac(String cedularucconsumidor,  String formadepago, String numerocomanda) {
         if (TextUtils.isEmpty(cedularucconsumidor) || !cedularucconsumidor.matches("[0-9]+") || cedularucconsumidor.length() <= 9 || cedularucconsumidor.length() > 15) {
             Toast.makeText(this, "Ingrese una cédula o R.U.C. válido (solo números, entre 10 y 15 caracteres)", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if (TextUtils.isEmpty(nombresconsumidor) || !nombresconsumidor.matches("[a-zA-Z ]+") || nombresconsumidor.length() > 30) {
+       /* if (TextUtils.isEmpty(nombresconsumidor) || !nombresconsumidor.matches("[a-zA-Z ]+") || nombresconsumidor.length() > 30) {
             Toast.makeText(this, "Ingrese un nombre válido (solo letras y espacios, máximo 30 caracteres)", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -253,7 +211,7 @@ public class Datosclientefactura extends AppCompatActivity {
         if (TextUtils.isEmpty(apellidosconsumidor) || !apellidosconsumidor.matches("[a-zA-Z ]+") || apellidosconsumidor.length() > 30) {
             Toast.makeText(this, "Ingrese un apellido válido (solo letras y espacios, máximo 30 caracteres)", Toast.LENGTH_SHORT).show();
             return false;
-        }
+        }*/
 
         if (TextUtils.isEmpty(formadepago) || !formadepago.matches("[a-zA-Z ]+") || formadepago.length() > 30) {
             Toast.makeText(this, "Ingrese una forma de pago válida (solo letras y espacios, máximo 30 caracteres)", Toast.LENGTH_SHORT).show();
@@ -413,4 +371,74 @@ public class Datosclientefactura extends AppCompatActivity {
             Toast.makeText(this, "Ocurrio un error al  eliminar", Toast.LENGTH_SHORT).show();
         }
     }
+
+   /* public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater barra = getMenuInflater();
+        barra.inflate(R.menu.menu_fac, menu);
+        return true;
+    }*/
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_fac, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.menu_custom_item) {
+            // Acción a realizar cuando se selecciona el elemento del menú
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void eliminardatosfac() {
+        String cedula = cedularucconsumidorEditText.getText().toString();
+        if (validarcedula(cedula)) {
+
+            boolean cedulaexiste = verificarcedulaexiste(cedula);
+
+            final SQLiteDatabase db = databaseHelper.getReadableDatabase();
+            if (db != null) {
+                if (cedulaexiste) {
+
+                    eliminarPorCedula(cedula);
+
+                    limpiarcampos();
+
+                } else {
+                    mensaje4();
+                }
+
+            }else{
+                mensaje5();
+            }
+        }
+    }
+
+    private void actualizardatosfac() {
+        String cedula = cedularucconsumidorEditText.getText().toString();
+        boolean cedulaexiste = verificarcedulaexiste(cedula);
+
+        if (cedulaexiste) {
+            String cedularucconsumidor = cedularucconsumidorEditText.getText().toString();
+            String nombresconsumidor = nombresconsumidorEditText.getText().toString();
+            String apellidosconsumidor = apellidosconsumidorEditText.getText().toString();
+            String direccionconsumidor = direccionconsumidorEditText.getText().toString();
+            String telefonoconsumidor = telefonoconsumidorEditText.getText().toString();
+            String correoconsumidor = correoconsumidorEditText.getText().toString();
+
+            if (validarCampos(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor)) {
+                actualizarDatosConsumidor(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor);
+            }
+        } else {
+            mensaje3();
+        }
+    }
+
+
 }

@@ -76,16 +76,29 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/textView6"
-                        android:layout_width="360dp"
+                    <LinearLayout
+                        android:layout_width="382dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="0999999999001"
-                        android:textAlignment="center"
-                        android:textColor="#000000"
-                        android:textStyle="bold"
-                        android:visibility="visible" />
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="329dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="    0999999999001"
+                            android:textAlignment="center"
+                            android:textColor="#000000"
+                            android:textStyle="bold"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/correofacEditText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/textView2"
@@ -150,6 +163,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAlignment="viewStart" />
+
+                        <TextView
+                            android:id="@+id/numerocomandafacEditText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="invisible"
+                            tools:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -308,21 +328,21 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/btn_enviarcorreo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Enviar Correo" />
 
                     <Button
-                        android:id="@+id/button2"
+                        android:id="@+id/btn_imprimir"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Imprimir" />
 
                     <Button
-                        android:id="@+id/button3"
+                        android:id="@+id/btn_home"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

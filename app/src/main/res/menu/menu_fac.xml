@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.proyecto_dm.Datosclientefactura"
+    android:icon="@drawable/ic_menu_custom"
+    app:showAsAction="always"
+    android:title="Mi Menú"
+    android:id="@+id/menu_custom_item"
+    >
+
+
+
+    <item
+        android:id="@+id/menuactualizar"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_menu_upload"
+        android:title="@string/actualizar"
+        android:visible="true" />
+
+    <item
+        android:id="@+id/menueliminar"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/eliminar"
+        android:visible="true" />
+
+</menu>
