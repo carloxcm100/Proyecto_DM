@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, Ordenar_menu.class);
                 startActivity(intent);
+                finish();
             }
         });
         datosfacturaButton.setOnClickListener(new View.OnClickListener() {

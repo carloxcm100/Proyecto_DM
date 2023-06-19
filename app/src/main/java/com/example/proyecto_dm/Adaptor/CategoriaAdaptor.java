@@ -82,7 +82,7 @@ public class CategoriaAdaptor extends RecyclerView.Adapter<CategoriaAdaptor.View
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            categoriaNombre = itemView.findViewById(R.id.categoriaFoto);
+            categoriaNombre = itemView.findViewById(R.id.categoriaNombre);
             categoriaFoto = itemView.findViewById(R.id.categoriaFoto);
             mainLayout = itemView.findViewById(R.id.mainLayout);
         }
