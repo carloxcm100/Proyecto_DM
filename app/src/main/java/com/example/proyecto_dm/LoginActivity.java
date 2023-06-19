@@ -1,17 +1,18 @@
 package com.example.proyecto_dm;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class LoginActivity extends AppCompatActivity {
 
     private Button cerrarSesionButton;
     private Button ayudaButton;
+    private Button ordenarButton;
     private Button datosfacturaButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
 
         cerrarSesionButton = findViewById(R.id.cerrarSesionButton);
         ayudaButton = findViewById(R.id.ayudaButton);
+        ordenarButton = findViewById(R.id.ordenarButton);
         datosfacturaButton = findViewById(R.id.datosfacturaButton);
 
         cerrarSesionButton.setOnClickListener(new View.OnClickListener() {
@@ -37,6 +39,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        ordenarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, Ordenar_menu.class);
+                startActivity(intent);
+            }
+        });
         datosfacturaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
