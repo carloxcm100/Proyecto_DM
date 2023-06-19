@@ -24,9 +24,7 @@
         <activity
             android:name=".Visualizar_orden"
             android:exported="false" />
-        <activity
-            android:name=".Ordenar_menu"
-            android:exported="false" />
+
         <activity
             android:name=".CrearUsuarioActivity"
             android:exported="false" />

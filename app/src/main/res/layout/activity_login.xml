@@ -47,5 +47,15 @@
         android:text="Datos Factura"
         android:visibility="visible" />
 
+    <TextView
+        android:id="@+id/nombresApellidosTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cerrarSesionButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
 </RelativeLayout>
 

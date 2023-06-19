@@ -1,9 +1,11 @@
 package com.example.proyecto_dm;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,9 @@ public class LoginActivity extends AppCompatActivity {
     private Button ayudaButton;
     private Button ordenarButton;
     private Button datosfacturaButton;
+    private TextView nombresApellidosTextView;
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +28,15 @@ public class LoginActivity extends AppCompatActivity {
         ayudaButton = findViewById(R.id.ayudaButton);
         ordenarButton = findViewById(R.id.ordenarButton);
         datosfacturaButton = findViewById(R.id.datosfacturaButton);
+        nombresApellidosTextView = findViewById(R.id.nombresApellidosTextView);
+
+        // Obtener los nombres y apellidos del usuario desde SharedPreferences
+        sharedPreferences = getSharedPreferences("my_shared_prefs", MODE_PRIVATE);
+        String nombres = sharedPreferences.getString("nombres", "");
+        String apellidos = sharedPreferences.getString("apellidos", "");
+
+        // Establecer los nombres y apellidos en el TextView
+        nombresApellidosTextView.setText(nombres + " " + apellidos);
 
         cerrarSesionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
                 cerrarSesion();
             }
         });
-
 
         ayudaButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,17 +71,22 @@ public class LoginActivity extends AppCompatActivity {
 
     private void cerrarSesion() {
         // Implementa aquí la lógica para cerrar sesión
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
 
-
     private void mostrarMensajeAyuda() {
         Toast.makeText(this, "El mesero está en camino", Toast.LENGTH_SHORT).show();
     }
 }
+
+
 
 
 

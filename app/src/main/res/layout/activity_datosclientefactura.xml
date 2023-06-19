@@ -15,6 +15,15 @@
         android:visibility="visible"
         app:srcCompat="@drawable/fondo" />
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarfac"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0000BCD4"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:visibility="visible" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,15 +38,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="342dp"
+                android:layout_height="414dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="297dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="center"
-                    android:text="Datos de la Factura"
+                    android:text="          Datos de la Factura"
                     android:textColor="@android:color/white"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -101,6 +110,27 @@
                     android:hint="Correo electrónico"
                     android:inputType="textEmailAddress"
                     android:textColor="@android:color/black" />
+
+                <EditText
+                    android:id="@+id/formadepagoEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    android:hint="Forma Pago"
+                    android:inputType="text"
+                    android:textColor="@android:color/black" />
+
+                <EditText
+                    android:id="@+id/numerocomandaEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    android:hint="Nº Comanda"
+                    android:inputType="text"
+                    android:textColor="@android:color/black" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -125,19 +155,20 @@
                     android:text="Agregar" />
 
                 <Button
-                    android:id="@+id/actualizarButton"
+                    android:id="@+id/btn_limpiarcampos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Actualizar" />
+                    android:text="Limpiar Campos" />
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_eliminar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Eliminar" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:gravity="center|center_horizontal"
+                android:orientation="horizontal">
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/generarFacturaButton"
