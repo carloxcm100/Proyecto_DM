@@ -1,5 +1,6 @@
 package com.example.proyecto_dm;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -58,8 +59,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_QUERY);
 
         db.execSQL(CREATE_TABLE_QUERY3);
+        // Insertar un usuario por defecto
+        insertarUsuario(db, "Nelson Angel", "Zamora Zhingri", 28, "0927256735", "correo@example.com", "Nexonm", "0927256735");
     }
 
+    private void insertarUsuario(SQLiteDatabase db, String nombres, String apellidos, int edad, String cedula, String correo, String usuario, String contraseña) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NOMBRES, nombres);
+        values.put(COLUMN_APELLIDOS, apellidos);
+        values.put(COLUMN_EDAD, edad);
+        values.put(COLUMN_CEDULA, cedula);
+        values.put(COLUMN_CORREO, correo);
+        values.put(COLUMN_USUARIO, usuario);
+        values.put(COLUMN_CONTRASEÑA, contraseña);
+        db.insert(TABLE_NAME, null, values);
+    }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Implementa la lógica para actualizar la base de datos si es necesario

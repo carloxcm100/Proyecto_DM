@@ -2,7 +2,9 @@ package com.example.proyecto_dm;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private Button borrarUsuariosButton;
 
     private DatabaseHelper databaseHelper;
+    public SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,21 +72,24 @@ public class MainActivity extends AppCompatActivity {
         borrarUsuariosButton = findViewById(R.id.borrarUsuariosButton);
 
         databaseHelper = new DatabaseHelper(this);
+        sharedPreferences = getSharedPreferences("my_shared_prefs", Context.MODE_PRIVATE);
     }
 
     private boolean validarCredenciales(String usuario, String contraseña) {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
         String[] projection = {
-                "usuario",
-                "contraseña"
+                DatabaseHelper.COLUMN_USUARIO,
+                DatabaseHelper.COLUMN_CONTRASEÑA,
+                DatabaseHelper.COLUMN_NOMBRES,
+                DatabaseHelper.COLUMN_APELLIDOS
         };
 
-        String selection = "usuario = ? AND contraseña = ?";
+        String selection = DatabaseHelper.COLUMN_USUARIO + " = ? AND " + DatabaseHelper.COLUMN_CONTRASEÑA + " = ?";
         String[] selectionArgs = {usuario, contraseña};
 
         Cursor cursor = db.query(
-                "usuarios",
+                DatabaseHelper.TABLE_NAME,
                 projection,
                 selection,
                 selectionArgs,
@@ -93,6 +99,21 @@ public class MainActivity extends AppCompatActivity {
         );
 
         boolean credencialesCorrectas = cursor.getCount() > 0;
+
+        if (credencialesCorrectas) {
+            // Obtener información del usuario
+            if (cursor.moveToFirst()) {
+                String nombres = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NOMBRES));
+                String apellidos = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_APELLIDOS));
+
+                // Guardar información del usuario en SharedPreferences
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("usuario", usuario);
+                editor.putString("nombres", nombres);
+                editor.putString("apellidos", apellidos);
+                editor.apply();
+            }
+        }
 
         cursor.close();
         db.close();
