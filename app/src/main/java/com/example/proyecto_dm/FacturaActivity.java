@@ -27,6 +27,7 @@ public class FacturaActivity extends AppCompatActivity {
     private TextView tipopagotextView;
     private TextView correofactextView;
     private TextView telefonofactTextView;
+    private TextView meserotextView;
     private TextView numerocomandafactextView;
     private TableLayout tlafactura;
     private TableLayout tlfactura;
@@ -51,6 +52,7 @@ public class FacturaActivity extends AppCompatActivity {
         tipopagotextView = findViewById(R.id.tipopagotextView);
         correofactextView = findViewById(R.id.correofacEditText);
         telefonofactTextView = findViewById(R.id.telefonofactextView);
+        meserotextView = findViewById(R.id.meserotextView);
         //numerocomandafacTextView = findViewById(R.id.numerocomandafactextView);
         /*tlafactura = findViewById(R.id.tlfactura);*/
         tlfactura = findViewById(R.id.tlfactura);
@@ -72,6 +74,9 @@ public class FacturaActivity extends AppCompatActivity {
         // Obtener el número de cédula guardado en SharedPreferences
         String cedula = sharedPreferences.getString("CEDULA", "");
         String formapago = sharedPreferences.getString("FORMAPAGO", "");
+
+        sharedPreferences = getSharedPreferences("my_shared_prefs", MODE_PRIVATE);
+        String usuario = sharedPreferences.getString("usuario", "");
 
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
@@ -108,6 +113,7 @@ public class FacturaActivity extends AppCompatActivity {
             telefonofactTextView.setText(telefono);
             correofactextView.setText(correo);
             tipopagotextView.setText(formapago);
+            meserotextView.setText(usuario);
             // Establecer la fecha y hora formateadas en el fechatextView
             fechatextView.setText(fechaHoraFormateada);
         }

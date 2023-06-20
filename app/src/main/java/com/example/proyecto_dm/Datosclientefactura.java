@@ -1,11 +1,10 @@
 package com.example.proyecto_dm;
 
-<<<<<<< HEAD
-=======
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
->>>>>>> 7fd53c2186d334aedf772239f2f9e68af259d101
+
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
