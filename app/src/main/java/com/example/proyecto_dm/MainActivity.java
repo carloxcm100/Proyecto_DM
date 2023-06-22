@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Actividad principal de la aplicación.
+ */
 public class MainActivity extends AppCompatActivity {
     private EditText usuarioEditText;
     private EditText contraseñaEditText;
@@ -72,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Inicializa los elementos de la interfaz de usuario y las variables necesarias.
+     */
     public void ini() {
         usuarioEditText = findViewById(R.id.et_usuario);
         contraseñaEditText = findViewById(R.id.et_contraseña);
@@ -83,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("my_shared_prefs", Context.MODE_PRIVATE);
     }
 
+    /**
+     * Valida las credenciales ingresadas por el usuario.
+     *
+     * @param usuario  Nombre de usuario ingresado.
+     * @param contraseña  Contraseña ingresada.
+     * @return true si las credenciales son correctas, false de lo contrario.
+     */
     private boolean validarCredenciales(String usuario, String contraseña) {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
@@ -129,6 +142,9 @@ public class MainActivity extends AppCompatActivity {
         return credencialesCorrectas;
     }
 
+    /**
+     * Borra todos los usuarios de la base de datos.
+     */
     private void borrarUsuarios() {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         db.delete(DatabaseHelper.TABLE_NAME, null, null);
@@ -136,6 +152,9 @@ public class MainActivity extends AppCompatActivity {
         db.close();
     }
 
+    /**
+     * Muestra los usuarios almacenados en la base de datos.
+     */
     private void mostrarUsuarios() {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
