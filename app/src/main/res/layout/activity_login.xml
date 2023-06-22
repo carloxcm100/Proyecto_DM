@@ -33,7 +33,7 @@
         android:id="@+id/ayudaButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ordenarButton"
+        android:layout_below="@id/datosfacturaButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="Ayuda" />
@@ -43,7 +43,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="250dp"
+        android:layout_below="@id/ordenarButton"
+        android:layout_marginTop="16dp"
         android:text="Datos Factura"
         android:visibility="visible" />
 
@@ -51,7 +52,7 @@
         android:id="@+id/nombresApellidosTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cerrarSesionButton"
+        android:layout_toLeftOf="@id/cerrarSesionButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:textColor="@android:color/white"

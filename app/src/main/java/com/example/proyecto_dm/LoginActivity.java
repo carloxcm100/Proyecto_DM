@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         String apellidos = sharedPreferences.getString("apellidos", "");
 
         // Establecer los nombres y apellidos en el TextView
-        nombresApellidosTextView.setText(nombres + " " + apellidos);
+        nombresApellidosTextView.setText("El Mesero "+ nombres + " " + apellidos+" les da la Bienvenida");
 
         cerrarSesionButton.setOnClickListener(new View.OnClickListener() {
             @Override

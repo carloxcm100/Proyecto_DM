@@ -12,9 +12,8 @@
         android:scaleType="centerCrop" />
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="150dp"
         android:src="@drawable/logo" />
 
     <LinearLayout
@@ -27,7 +26,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="70dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_usuario"
@@ -74,29 +73,22 @@
                 android:text="Crear Usuario"
                 android:onClick="onClick"
                 android:textAllCaps="false" />
+            <Button
+                android:id="@+id/borrarUsuariosButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Borrar usuarios"
+                android:onClick="onClick"
+                android:textAllCaps="false" />
+            <Button
+                android:id="@+id/consultarUsuariosButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Consultar usuarios"
+                android:onClick="onClick"
+                android:textAllCaps="false" />
 
         </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:gravity="center" >
-        <Button
-            android:id="@+id/borrarUsuariosButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Borrar usuarios"
-            android:onClick="onClick"
-            android:textAllCaps="false" />
-        <Button
-            android:id="@+id/consultarUsuariosButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Consultar usuarios"
-            android:onClick="onClick"
-            android:textAllCaps="false" />
-    </LinearLayout>
 
     </LinearLayout>
 
