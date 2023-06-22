@@ -1,19 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.proyecto_dm.Datosclientefactura"
-    android:icon="@drawable/ic_menu_custom"
-    app:showAsAction="always"
-    android:title="Mi Menú"
     android:id="@+id/menu_custom_item"
-    >
-
+    android:icon="@drawable/ic_menu_custom"
+    android:title="Datos de  Factura"
+    app:showAsAction="always"
+    tools:context="com.example.proyecto_dm.Datosclientefactura"
+    tools:icon="@drawable/baseline_view_headline_24">
 
 
     <item
         android:id="@+id/menuactualizar"
         android:enabled="true"
         android:icon="@android:drawable/ic_menu_upload"
+        android:iconTint="#000000"
         android:title="@string/actualizar"
         android:visible="true" />
 
@@ -21,6 +21,7 @@
         android:id="@+id/menueliminar"
         android:enabled="true"
         android:icon="@android:drawable/ic_menu_delete"
+        android:iconTint="#000000"
         android:title="@string/eliminar"
         android:visible="true" />
 

@@ -4,12 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Datosclientefactura">
+    android:background="#FFFFFF"
+    android:backgroundTint="#00FFFFFF"
+    android:visibility="visible"
+    tools:context=".Datosclientefactura"
+    tools:visibility="visible">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FCFFFFFF"
         android:scaleType="centerCrop"
         android:src="@drawable/fondo"
         android:visibility="visible"
@@ -17,12 +23,16 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarfac"
-        android:layout_width="match_parent"
+        android:layout_width="368dp"
         android:layout_height="wrap_content"
-        android:background="#0000BCD4"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="17dp"
+        android:alwaysDrawnWithCache="false"
+        android:background="#FFFDFD"
+        android:backgroundTint="#00000000"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        android:visibility="visible" />
+        android:visibility="visible"
+        app:buttonGravity="bottom" />
 
     <LinearLayout
         android:layout_width="match_parent"
