@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Actividad para crear un nuevo usuario.
+ */
 public class CrearUsuarioActivity extends AppCompatActivity {
     private EditText nombresEditText;
     private EditText apellidosEditText;
@@ -67,6 +70,15 @@ public class CrearUsuarioActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Valida los campos del formulario de creación de usuario.
+     *
+     * @param nombres  Nombres del usuario.
+     * @param apellidos  Apellidos del usuario.
+     * @param cedula  Cédula del usuario.
+     * @param correo  Correo electrónico del usuario.
+     * @return true si los campos son válidos, false de lo contrario.
+     */
     private boolean validarCampos(String nombres, String apellidos, String cedula, String correo) {
         if (TextUtils.isEmpty(nombres) || !nombres.matches("[a-zA-Z ]+") || nombres.length() > 20) {
             Toast.makeText(this, "Ingrese un nombre válido (solo letras y espacios, máximo 20 caracteres)", Toast.LENGTH_SHORT).show();
@@ -90,6 +102,18 @@ public class CrearUsuarioActivity extends AppCompatActivity {
 
         return true;
     }
+
+    /**
+     * Guarda un nuevo usuario en la base de datos.
+     *
+     * @param nombres  Nombres del usuario.
+     * @param apellidos  Apellidos del usuario.
+     * @param edad  Edad del usuario.
+     * @param cedula  Cédula del usuario.
+     * @param correo  Correo electrónico del usuario.
+     * @param usuario  Nombre de usuario del usuario.
+     * @param contraseña  Contraseña del usuario.
+     */
     private void guardarUsuario(String nombres, String apellidos, int edad, String cedula, String correo, String usuario, String contraseña) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
 

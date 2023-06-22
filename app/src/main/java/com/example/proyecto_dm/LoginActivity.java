@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Actividad que representa la pantalla de inicio de sesión.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private Button cerrarSesionButton;
@@ -36,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         String apellidos = sharedPreferences.getString("apellidos", "");
 
         // Establecer los nombres y apellidos en el TextView
-        nombresApellidosTextView.setText(nombres + " " + apellidos);
+        nombresApellidosTextView.setText("El Mesero "+ nombres + " " + apellidos+" les da la Bienvenida");
 
         cerrarSesionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +72,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Cierra la sesión del usuario y redirige a la actividad de inicio de sesión.
+     */
     private void cerrarSesion() {
         // Implementa aquí la lógica para cerrar sesión
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -81,6 +87,9 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Muestra un mensaje de ayuda al usuario.
+     */
     private void mostrarMensajeAyuda() {
         Toast.makeText(this, "El mesero está en camino", Toast.LENGTH_SHORT).show();
     }
