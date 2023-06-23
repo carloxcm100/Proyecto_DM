@@ -57,7 +57,6 @@ public class FacturaActivity extends AppCompatActivity {
         meserotextView = findViewById(R.id.meserotextView);
         numerofacturatextView = findViewById(R.id.numerofacturatextView);
         //numerocomandafacTextView = findViewById(R.id.numerocomandafactextView);
-        /*tlafactura = findViewById(R.id.tlfactura);*/
         tlfactura = findViewById(R.id.tlfactura);
         // Obtener la fecha y hora actual
         Date fechaActual = new Date();
@@ -122,7 +121,6 @@ public class FacturaActivity extends AppCompatActivity {
             numerofacturatextView.setText(numerofactura);
             // Establecer la fecha y hora formateadas en el fechatextView
             fechatextView.setText(fechaHoraFormateada);
-
         }
 
         // Cierra el cursor
@@ -130,9 +128,6 @@ public class FacturaActivity extends AppCompatActivity {
 
         // Cierra la base de datos
         db.close();
-
-        /*llenartabla(cedula);*/
-        /*llenartabla2();*/
 
         llenartabla3();
 
