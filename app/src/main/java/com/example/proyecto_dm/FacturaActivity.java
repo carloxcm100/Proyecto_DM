@@ -121,7 +121,6 @@ public class FacturaActivity extends AppCompatActivity {
         // Cierra el cursor
         cursor.close();
 
-
         // Cierra la base de datos
         db.close();
 
@@ -164,134 +163,6 @@ public class FacturaActivity extends AppCompatActivity {
         Toast.makeText(this, "Se envio la factura al correo "+correofac, Toast.LENGTH_SHORT).show();
     }
 
-    /*void llenartabla(String cedula){
-        // Obtener una referencia a la base de datos
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
-
-        // Definir las columnas que se desean obtener
-        String[] columns = {"cedularuc", "nombresconsumidor", "apellidosconsumidor", "telefonoconsumidor", "correoconsumidor"};
-
-        // Definir la condición de selección
-        String selection = "cedularuc = ?";
-        String[] selectionArgs = {cedula};
-
-        // Realizar la consulta a la base de datos
-        Cursor cursor = db.query("consumidor", columns, selection, selectionArgs, null, null, null);
-
-        // Obtener las columnas de los datos
-        int cedulaIndex = cursor.getColumnIndex("cedularuc");
-        int nombreIndex = cursor.getColumnIndex("nombresconsumidor");
-        int apellidoIndex = cursor.getColumnIndex("apellidosconsumidor");
-        int telefonoIndex = cursor.getColumnIndex("telefonoconsumidor");
-        int correoIndex = cursor.getColumnIndex("correoconsumidor");
-
-        // Obtener una referencia al TableRow existente en tu diseño
-        TableRow tableRow = findViewById(R.id.trfactura);
-
-        // Limpiar el TableRow antes de llenarlo nuevamente
-        tableRow.removeAllViews();
-
-        // Verificar si se encontraron datos
-        if (cursor.moveToFirst()) {
-            // Obtener los datos de la fila actual
-            String cedulaf = cursor.getString(cedulaIndex);
-            String nombref = cursor.getString(nombreIndex);
-            String apellidof = cursor.getString(apellidoIndex);
-            String telefonof = cursor.getString(telefonoIndex);
-            String correof = cursor.getString(correoIndex);
-
-            // Crear TextViews para cada columna de datos
-            TextView tvcodigo = new TextView(this);
-            tvcodigo.setText(cedulaf);
-
-            TextView tvnombre = new TextView(this);
-            tvnombre.setText(nombref);
-
-            TextView tvprecio = new TextView(this);
-            tvprecio.setText(apellidof);
-
-            TextView tvcantidad = new TextView(this);
-            tvcantidad.setText(telefonof);
-
-            TextView tvtotal = new TextView(this);
-            tvtotal.setText(correof);
-
-            // Agregar los TextViews al TableRow
-            tableRow.addView(tvcodigo);
-            tableRow.addView(tvnombre);
-            tableRow.addView(tvprecio);
-            tableRow.addView(tvcantidad);
-            tableRow.addView(tvtotal);
-        }
-
-        // Cerrar el cursor y la conexión a la base de datos
-        cursor.close();
-        db.close();
-    }
-
-    void llenartabla2() {
-        // Obtener una referencia a la base de datos
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
-
-        // Definir las columnas que se desean obtener
-        String[] columns = {"cedularuc", "nombresconsumidor", "apellidosconsumidor", "telefonoconsumidor", "correoconsumidor"};
-
-        // Realizar la consulta a la base de datos
-        Cursor cursor = db.query("consumidor", columns, null, null, null, null, null);
-
-        // Obtener una referencia al TableRow existente en tu diseño
-        TableRow tableRow = findViewById(R.id.trfactura);
-
-        // Limpiar el TableRow antes de llenarlo nuevamente
-        tableRow.removeAllViews();
-
-        // Verificar si se encontraron datos
-        if (cursor.moveToFirst()) {
-            int cedulaIndex = cursor.getColumnIndex("cedularuc");
-            int nombreIndex = cursor.getColumnIndex("nombresconsumidor");
-            int apellidoIndex = cursor.getColumnIndex("apellidosconsumidor");
-            int telefonoIndex = cursor.getColumnIndex("telefonoconsumidor");
-            int correoIndex = cursor.getColumnIndex("correoconsumidor");
-
-            // Recorrer el cursor para obtener todos los datos
-            do {
-                // Obtener los datos de la fila actual
-                String cedulaf = cursor.getString(cedulaIndex);
-                String nombref = cursor.getString(nombreIndex);
-                String apellidof = cursor.getString(apellidoIndex);
-                String telefonof = cursor.getString(telefonoIndex);
-                String correof = cursor.getString(correoIndex);
-
-                // Crear TextViews para cada columna de datos
-                TextView tvcodigo = new TextView(this);
-                tvcodigo.setText(cedulaf);
-
-                TextView tvnombre = new TextView(this);
-                tvnombre.setText(nombref);
-
-                TextView tvprecio = new TextView(this);
-                tvprecio.setText(apellidof);
-
-                TextView tvcantidad = new TextView(this);
-                tvcantidad.setText(telefonof);
-
-                TextView tvtotal = new TextView(this);
-                tvtotal.setText(correof);
-
-                // Agregar los TextViews al TableRow
-                tableRow.addView(tvcodigo);
-                tableRow.addView(tvnombre);
-                tableRow.addView(tvprecio);
-                tableRow.addView(tvcantidad);
-                tableRow.addView(tvtotal);
-
-            } while (cursor.moveToNext());
-        }
-
-        // Cerrar el cursor y la conexión a la base de datos
-        cursor.close();
-        db.close();
-    }*/
     private void llenartabla3() {
         // Obtener una referencia a la base de datos
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
@@ -340,6 +211,7 @@ public class FacturaActivity extends AppCompatActivity {
                 tableLayout.addView(tableRow);
 
             } while (cursor.moveToNext());
+
         }
 
         // Cerrar el cursor y la conexión a la base de datos

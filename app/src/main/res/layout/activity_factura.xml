@@ -353,6 +353,9 @@
                             android:text="aa"
                             android:visibility="invisible" />
 
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
                         <TableLayout
                             android:id="@+id/tlfactura"
                             android:layout_width="387dp"
@@ -360,7 +363,7 @@
 
 
                         </TableLayout>
-
+                        </ScrollView>
                         <TextView
                             android:id="@+id/textView17"
                             android:layout_width="wrap_content"
