@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 public class FacturaActivity extends AppCompatActivity {
 
@@ -27,6 +28,7 @@ public class FacturaActivity extends AppCompatActivity {
     private TextView tipopagotextView;
     private TextView correofactextView;
     private TextView telefonofactTextView;
+    private TextView numerofacturatextView;
     private TextView meserotextView;
     private TextView numerocomandafactextView;
     private TableLayout tlafactura;
@@ -53,6 +55,7 @@ public class FacturaActivity extends AppCompatActivity {
         correofactextView = findViewById(R.id.correofacEditText);
         telefonofactTextView = findViewById(R.id.telefonofactextView);
         meserotextView = findViewById(R.id.meserotextView);
+        numerofacturatextView = findViewById(R.id.numerofacturatextView);
         //numerocomandafacTextView = findViewById(R.id.numerocomandafactextView);
         /*tlafactura = findViewById(R.id.tlfactura);*/
         tlfactura = findViewById(R.id.tlfactura);
@@ -79,6 +82,8 @@ public class FacturaActivity extends AppCompatActivity {
         String usuario = sharedPreferences.getString("usuario", "");
 
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
+
+        String numerofactura = generarnumerofacturarandom();
 
         // Especifica las columnas que deseas recuperar
         String[] columns = {"cedularuc", "nombresconsumidor", "apellidosconsumidor", "telefonoconsumidor", "correoconsumidor"};
@@ -114,8 +119,10 @@ public class FacturaActivity extends AppCompatActivity {
             correofactextView.setText(correo);
             tipopagotextView.setText(formapago);
             meserotextView.setText(usuario);
+            numerofacturatextView.setText(numerofactura);
             // Establecer la fecha y hora formateadas en el fechatextView
             fechatextView.setText(fechaHoraFormateada);
+
         }
 
         // Cierra el cursor
@@ -152,6 +159,19 @@ public class FacturaActivity extends AppCompatActivity {
         });
     }
 
+    private String generarnumerofacturarandom() {
+        Random random = new Random();
+
+        // Generar los tres segmentos del número
+        int segmento1 = random.nextInt(1000);
+        int segmento2 = random.nextInt(1000);
+        int segmento3 = random.nextInt(1000000000);
+
+        // Formatear los segmentos en el formato deseado
+        String numeroRandom = String.format("%03d-%03d-%05d", segmento1, segmento2, segmento3);
+
+        return numeroRandom;
+    }
 
 
     private void mensaje2() {
