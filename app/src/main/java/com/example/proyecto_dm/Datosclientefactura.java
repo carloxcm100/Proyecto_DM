@@ -141,14 +141,12 @@ public class Datosclientefactura extends AppCompatActivity {
                     EditText telefonoconsumidortemp = findViewById(R.id.telefonoconsumidorEditText);
                     EditText direccionconsumidortemp = findViewById(R.id.direccionconsumidorEditText);
                     EditText correoconsumidortemp = findViewById(R.id.correoconsumidorEditText);
-
                     // Verificar si la cédula es válida utilizando el método validarcedula()
                     if (validarcedula(cedularucconsumidor)) {
                         // Ejecutar una consulta SQL para obtener los datos del consumidor con la cédula ingresada
                         Cursor c = db.rawQuery("SELECT cedularuc, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor FROM consumidor WHERE cedularuc = '" + cedularucconsumidor + "'", null);
                         // Si el cursor no está vacío y se pudo mover al primer registro, asignar los valores a los EditText correspondientes
                         if (c != null && c.moveToFirst()) {
-
                             cedularucconsumidortemp.setText(c.getString(c.getColumnIndex("cedularuc")).toString());
                             nombresconsumidortemp.setText(c.getString(c.getColumnIndex("nombresconsumidor")).toString());
                             apellidosconsumidortemp.setText(c.getString(c.getColumnIndex("apellidosconsumidor")).toString());
@@ -159,7 +157,6 @@ public class Datosclientefactura extends AppCompatActivity {
                             // Si el cursor está vacío, mostrar un mensaje de error
                             mensaje7();
                         }
-
                         if (c != null) {
                             // Cerrar el cursor
                             c.close();
@@ -168,14 +165,6 @@ public class Datosclientefactura extends AppCompatActivity {
                         db.close();
                     }
                 }
-            }
-        });
-
-        //cuando se hace clic en el botón limpiarcamposButton, se llamara al metodo limpiarcampos()
-        limpiarcamposButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                limpiarcampos();
             }
         });
 
@@ -202,6 +191,14 @@ public class Datosclientefactura extends AppCompatActivity {
                 }
             }
         });
+        //cuando se hace clic en el botón limpiarcamposButton, se llamara al metodo limpiarcampos()
+        limpiarcamposButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                limpiarcampos();
+            }
+        });
+
     }
 
     private void limpiarcampos() {
@@ -384,46 +381,6 @@ public class Datosclientefactura extends AppCompatActivity {
         return true;
     }
 
-    private void actualizarDatosConsumidor(String cedularucconsumidor, String nombresconsumidor, String apellidosconsumidor, String direccionconsumidor, String telefonoconsumidor, String correoconsumidor) {
-        final SQLiteDatabase db = databaseHelper.getWritableDatabase();
-        String cedulacon = cedularucconsumidor;
-
-        ContentValues values3 = new ContentValues();
-        values3.put(DatabaseHelper.COLUMN_CEDULARUCCONSUMIDOR, cedularucconsumidor);
-        values3.put(DatabaseHelper.COLUMN_NOMBRESCONSUMIDOR, nombresconsumidor);
-        values3.put(DatabaseHelper.COLUMN_APELLIDOSCONSUMIDOR, apellidosconsumidor);
-        values3.put(DatabaseHelper.COLUMN_DIRECCIONCONSUMIDOR, direccionconsumidor);
-        values3.put(DatabaseHelper.COLUMN_TELEFONOCONSUMIDOR, telefonoconsumidor);
-        values3.put(DatabaseHelper.COLUMN_CORREOCONSUMIDOR, correoconsumidor);
-
-        long resultado = db.update(DatabaseHelper.TABLE_NAME3, values3, DatabaseHelper.COLUMN_CEDULARUCCONSUMIDOR + " = ?", new String[]{cedulacon});
-
-        if (resultado != -1) {
-            mensaje1();
-        } else {
-            mensaje6();
-        }
-        db.close();
-    }
-
-    private void eliminarPorCedula(String cedula) {
-        SQLiteDatabase db = databaseHelper.getWritableDatabase();
-        String whereClause = "cedularuc = ?";
-        String[] whereArgs = {cedula};
-        int resultado = db.delete("consumidor", whereClause, whereArgs);
-
-        Toast.makeText(this, "Registro eliminado exitosamente", Toast.LENGTH_SHORT).show();
-
-        db.close();
-
-        if (resultado > 0) {
-            Toast.makeText(this, "Registro eliminado exitosamente", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Ocurrio un error al  eliminar", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -451,29 +408,39 @@ public class Datosclientefactura extends AppCompatActivity {
         if (validarcedula(cedula)) {
 
             boolean cedulaexiste = verificarcedulaexiste(cedula);
-
             final SQLiteDatabase db = databaseHelper.getReadableDatabase();
             if (db != null) {
                 if (cedulaexiste) {
-
                     eliminarPorCedula(cedula);
-
                     limpiarcampos();
-
                 } else {
                     mensaje4();
                 }
-
             }else{
                 mensaje5();
             }
         }
     }
 
+    private void eliminarPorCedula(String cedula) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        String whereClause = "cedularuc = ?";
+        String[] whereArgs = {cedula};
+        int resultado = db.delete("consumidor", whereClause, whereArgs);
+
+        Toast.makeText(this, "Registro eliminado exitosamente", Toast.LENGTH_SHORT).show();
+
+        db.close();
+
+        if (resultado > 0) {
+            Toast.makeText(this, "Registro eliminado exitosamente", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Ocurrio un error al  eliminar", Toast.LENGTH_SHORT).show();
+        }
+    }
     private void actualizardatosfac() {
         String cedula = cedularucconsumidorEditText.getText().toString();
         boolean cedulaexiste = verificarcedulaexiste(cedula);
-
         if (cedulaexiste) {
             String cedularucconsumidor = cedularucconsumidorEditText.getText().toString();
             String nombresconsumidor = nombresconsumidorEditText.getText().toString();
@@ -481,7 +448,6 @@ public class Datosclientefactura extends AppCompatActivity {
             String direccionconsumidor = direccionconsumidorEditText.getText().toString();
             String telefonoconsumidor = telefonoconsumidorEditText.getText().toString();
             String correoconsumidor = correoconsumidorEditText.getText().toString();
-
             if (validarCampos(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor)) {
                 actualizarDatosConsumidor(cedularucconsumidor, nombresconsumidor, apellidosconsumidor, direccionconsumidor, telefonoconsumidor, correoconsumidor);
             }
@@ -490,5 +456,25 @@ public class Datosclientefactura extends AppCompatActivity {
         }
     }
 
+    private void actualizarDatosConsumidor(String cedularucconsumidor, String nombresconsumidor, String apellidosconsumidor, String direccionconsumidor, String telefonoconsumidor, String correoconsumidor) {
+        final SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        String cedulacon = cedularucconsumidor;
+        ContentValues values3 = new ContentValues();
+        values3.put(DatabaseHelper.COLUMN_CEDULARUCCONSUMIDOR, cedularucconsumidor);
+        values3.put(DatabaseHelper.COLUMN_NOMBRESCONSUMIDOR, nombresconsumidor);
+        values3.put(DatabaseHelper.COLUMN_APELLIDOSCONSUMIDOR, apellidosconsumidor);
+        values3.put(DatabaseHelper.COLUMN_DIRECCIONCONSUMIDOR, direccionconsumidor);
+        values3.put(DatabaseHelper.COLUMN_TELEFONOCONSUMIDOR, telefonoconsumidor);
+        values3.put(DatabaseHelper.COLUMN_CORREOCONSUMIDOR, correoconsumidor);
+
+        long resultado = db.update(DatabaseHelper.TABLE_NAME3, values3, DatabaseHelper.COLUMN_CEDULARUCCONSUMIDOR + " = ?", new String[]{cedulacon});
+
+        if (resultado != -1) {
+            mensaje1();
+        } else {
+            mensaje6();
+        }
+        db.close();
+    }
 
 }
