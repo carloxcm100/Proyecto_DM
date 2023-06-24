@@ -370,7 +370,7 @@ public class Datosclientefactura extends AppCompatActivity {
         }
 
         // Cerrar la conexión con la base de datos
-        /*db.close();*/
+        db.close();
     }
 
     private boolean validarcedula(String cedularucconsumidor){
