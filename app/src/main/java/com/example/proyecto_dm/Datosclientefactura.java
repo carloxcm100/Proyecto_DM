@@ -370,7 +370,7 @@ public class Datosclientefactura extends AppCompatActivity {
         }
 
         // Cerrar la conexión con la base de datos
-        db.close();
+        /*db.close();*/
     }
 
     private boolean validarcedula(String cedularucconsumidor){
@@ -398,9 +398,17 @@ public class Datosclientefactura extends AppCompatActivity {
         } else if (id == R.id.menueliminar) {
             eliminardatosfac();
             return true;
+        }else if (id == R.id.menudatosclientes) {
+            datosclientes();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void datosclientes() {
+        Intent intent = new Intent(Datosclientefactura.this, TodosclientesActivity.class);
+        startActivity(intent);
     }
 
     private void eliminardatosfac() {

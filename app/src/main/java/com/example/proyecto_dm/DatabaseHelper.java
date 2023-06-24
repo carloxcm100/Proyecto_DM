@@ -27,6 +27,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DIRECCIONCONSUMIDOR = "direccionconsumidor";
     public static final String COLUMN_TELEFONOCONSUMIDOR = "telefonoconsumidor";
     public static final String COLUMN_CORREOCONSUMIDOR = "correoconsumidor";
+    public static final String TABLE_NAME4 = "ordenespedidos";
+    public static final String COLUMN_IDORDENESPEDIDOS = "id";
+    public static final String COLUMN_CODIGOORDENESPEDIDOS = "codigo";
+    public static final String COLUMN_NOMBREORDENESPEDIDOS = "nombre";
+    public static final String COLUMN_PRECIOORDENESPEDIDOS = "precio";
+    public static final String COLUMN_CANTIDADORDENESPEDIDOS = "cantidad";
+    public static final String COLUMN_TOTALORDENESPEDIDOS = "total";
 
     private static final String CREATE_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME + " (" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -49,6 +56,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_CORREOCONSUMIDOR + " TEXT" +
             ")";
 
+    private static final String CREATE_TABLE_QUERY4 = "CREATE TABLE " + TABLE_NAME4 + " (" +
+            COLUMN_IDORDENESPEDIDOS + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            COLUMN_CODIGOORDENESPEDIDOS + " TEXT," +
+            COLUMN_NOMBREORDENESPEDIDOS + " TEXT," +
+            COLUMN_PRECIOORDENESPEDIDOS + " TEXT," +
+            COLUMN_CANTIDADORDENESPEDIDOS + " TEXT," +
+            COLUMN_TOTALORDENESPEDIDOS + " TEXT" +
+            ")";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -61,6 +77,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_QUERY3);
         // Insertar un usuario por defecto
         insertarUsuario(db, "Nelson Angel", "Zamora Zhingri", 28, "0927256735", "correo@example.com", "Nexonm", "0927256735");
+
+        db.execSQL(CREATE_TABLE_QUERY4);
+        insertarordenespedidos(db,"22222","Hamburguesa","5.2","2","10.4");
+        insertarordenespedidos(db,"22222","Hotdog","3.3","2","6.6");
+        insertarordenespedidos(db,"22222","Coca - Cola","1","3","3");
+        insertarordenespedidos(db,"22222","Jugo de Naranja","1.4","1","1.4");
+        insertarordenespedidos(db,"22222","Salsas Extras","0.50","4","2");
+        insertarordenespedidos(db,"33333","Hotdog","5.2","2","10.4");
+        insertarordenespedidos(db,"33333","Coca - Cola","1","2","2");
+        insertarordenespedidos(db,"33333","Jugo de Naranja","1.4","5","7");
+        insertarordenespedidos(db,"44444","Hamburguesa","5.2","2","10.4");
+        insertarordenespedidos(db,"44444","Hotdog","3.2","4","12.8");
+        insertarordenespedidos(db,"44444","Coca - Cola","1","5","5");
+        insertarordenespedidos(db,"44444","Jugo de Naranja","1.4","2","2.8");
+        insertarordenespedidos(db,"44444","Salsas Extras","0.50","4","2");
+        insertarordenespedidos(db,"44444","Pizza","5.2","2","10.4");
+        insertarordenespedidos(db,"44444","Papas Fritas","2.2","5","11");
+        insertarordenespedidos(db,"44444","Arroz con Pollo","3","2","6");
+        insertarordenespedidos(db,"44444","Sangria","7.3","2","14.6");
+        insertarordenespedidos(db,"44444","Arroz Marinero","5.2","2","10.4");
+        insertarordenespedidos(db,"44444","Cazuela","2","4","8");
+        insertarordenespedidos(db,"44444","Moro","5.2","2","10.4");
+        insertarordenespedidos(db,"44444","Sushi","10.2","7","71.4");
+        insertarordenespedidos(db,"44444","Pollo Frito","1.5","2","3");
+        insertarordenespedidos(db,"44444","Tacos","1","1","1");
+        insertarordenespedidos(db,"44444","Sándwiches de Carne","2.5","2","5");
+        insertarordenespedidos(db,"44444","Sándwiches de Pollo","2","2","4");
+        insertarordenespedidos(db,"44444","Sándwiches de Atun","1","1","1");
+        insertarordenespedidos(db,"44444","Sopa Marinera","1.25","2","2.50");
+        insertarordenespedidos(db,"44444","Nuggets de pollo","1","1","1");
+        insertarordenespedidos(db,"44444","Shawarma","1.5","2","3");
+        insertarordenespedidos(db,"44444","Wraps","2","2","4");
+        insertarordenespedidos(db,"44444","Empanadas","1","4","4");
+        insertarordenespedidos(db,"44444","Ramen","5","3","15");
+
+    }
+
+    private void insertarordenespedidos(SQLiteDatabase db, String codigo, String nombre, String precio, String cantidad, String total) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CODIGOORDENESPEDIDOS, codigo);
+        values.put(COLUMN_NOMBREORDENESPEDIDOS, nombre);
+        values.put(COLUMN_PRECIOORDENESPEDIDOS, precio);
+        values.put(COLUMN_CANTIDADORDENESPEDIDOS, cantidad);
+        values.put(COLUMN_TOTALORDENESPEDIDOS, total);
+        db.insert(TABLE_NAME4, null, values);
     }
 
     private void insertarUsuario(SQLiteDatabase db, String nombres, String apellidos, int edad, String cedula, String correo, String usuario, String contraseña) {

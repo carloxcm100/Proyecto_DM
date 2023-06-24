@@ -14,6 +14,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -29,8 +31,9 @@ public class FacturaActivity extends AppCompatActivity {
     private TextView telefonofactTextView;
     private TextView numerofacturatextView;
     private TextView meserotextView;
+    private TextView totalapagartextView;
     private TextView numerocomandafactextView;
-    private TableLayout tlafactura;
+
     private TableLayout tlfactura;
     private Button btn_enviarcorreo;
     private Button btn_imprimir;
@@ -52,6 +55,7 @@ public class FacturaActivity extends AppCompatActivity {
         telefonofactTextView = findViewById(R.id.telefonofactextView);
         meserotextView = findViewById(R.id.meserotextView);
         numerofacturatextView = findViewById(R.id.numerofacturatextView);
+        totalapagartextView = findViewById(R.id.totalapagartextView);
         //numerocomandafacTextView = findViewById(R.id.numerocomandafactextView);
         tlfactura = findViewById(R.id.tlfactura);
         // Obtener la fecha y hora actual
@@ -70,10 +74,12 @@ public class FacturaActivity extends AppCompatActivity {
         // Obtener el número de cédula guardado en SharedPreferences
         String cedula = sharedPreferences.getString("CEDULA", "");
         String formapago = sharedPreferences.getString("FORMAPAGO", "");
+        String comanda = sharedPreferences.getString("COMANDA","");
         sharedPreferences = getSharedPreferences("my_shared_prefs", MODE_PRIVATE);
         String usuario = sharedPreferences.getString("usuario", "");
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         String numerofactura = generarnumerofacturarandom();
+
 
         // Especifica las columnas que deseas recuperar
         String[] columns = {"cedularuc", "nombresconsumidor", "apellidosconsumidor", "telefonoconsumidor", "correoconsumidor"};
@@ -96,6 +102,7 @@ public class FacturaActivity extends AppCompatActivity {
             String apellido = cursor.getString(apellidoIndex);
             String telefono = cursor.getString(telefonoIndex);
             String correo = cursor.getString(correoIndex);
+            double sumaTotal = sumarTotales(comanda);
             // Actualiza los TextView con los datos obtenidos
             faccedulaTextView.setText(cedulax);
             nombrefacTextView.setText(nombre);
@@ -105,6 +112,7 @@ public class FacturaActivity extends AppCompatActivity {
             tipopagotextView.setText(formapago);
             meserotextView.setText(usuario);
             numerofacturatextView.setText(numerofactura);
+            totalapagartextView.setText(String.valueOf(sumaTotal));
             // Establecer la fecha y hora formateadas en el fechatextView
             fechatextView.setText(fechaHoraFormateada);
         }
@@ -113,7 +121,7 @@ public class FacturaActivity extends AppCompatActivity {
         // Cierra la base de datos
         db.close();
 
-        llenartabla3();
+        llenartabla3(comanda);
 
         btn_enviarcorreo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,12 +146,42 @@ public class FacturaActivity extends AppCompatActivity {
         });
     }
 
+    private double sumarTotales(String codigo) {
+        // Obtener una referencia a la base de datos
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        // Definir la columna que se desea sumar
+        String column = "total";
+        // Definir la cláusula WHERE para filtrar por código
+        String selection = "codigo = ?";
+        String[] selectionArgs = {codigo};
+        // Realizar la consulta a la base de datos con la cláusula WHERE
+        Cursor cursor = db.query("ordenespedidos", new String[]{column}, selection, selectionArgs, null, null, null);
+        // Variable para almacenar la suma de los totales
+        double suma = 0;
+        // Verificar si se encontraron datos
+        if (cursor.moveToFirst()) {
+            do {
+                // Obtener el valor de la columna "total" como cadena
+                String totalStr = cursor.getString(cursor.getColumnIndex(column));
+                // Convertir el valor de cadena a double y sumarlo a la variable de suma
+                suma += Double.parseDouble(totalStr);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        String sumaconformato = decimalFormat.format(suma);
+
+        // Convertir la suma formateada a double y retornarla
+        return Double.parseDouble(sumaconformato);
+    }
+
     private String generarnumerofacturarandom() {
         Random random = new Random();
         // Generar los tres segmentos del número
         int segmento1 = random.nextInt(1000);
         int segmento2 = random.nextInt(1000);
-        int segmento3 = random.nextInt(1000000000);
+        int segmento3 = random.nextInt(1000000);
         // Formatear los segmentos en el formato deseado
         String numeroRandom = String.format("%03d-%03d-%05d", segmento1, segmento2, segmento3);
         return numeroRandom;
@@ -158,6 +196,52 @@ public class FacturaActivity extends AppCompatActivity {
         Toast.makeText(this, "Se envio la factura al correo "+correofac, Toast.LENGTH_SHORT).show();
     }
 
+    private void llenartabla3(String codigo) {
+        // Obtener una referencia a la base de datos
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        // Definir las columnas que se desean obtener
+        String[] columns = {"codigo", "nombre", "precio", "cantidad", "total"};
+        // Definir la cláusula WHERE para filtrar por código
+        String selection = "codigo = ?";
+        String[] selectionArgs = {codigo};
+        // Realizar la consulta a la base de datos
+        Cursor cursor = db.query("ordenespedidos", columns, selection, selectionArgs, null, null, null);
+        // Obtener una referencia al TableLayout existente en tu diseño
+        TableLayout tableLayout = findViewById(R.id.tlfactura);
+        // Limpiar el TableLayout antes de llenarlo nuevamente
+        tableLayout.removeAllViews();
+        // Verificar si se encontraron datos
+        if (cursor.moveToFirst()) {
+            do {
+                // Obtener los datos de la fila actual
+                String cedulaf = cursor.getString(cursor.getColumnIndex("codigo"));
+                String nombref = cursor.getString(cursor.getColumnIndex("nombre"));
+                String apellidof = cursor.getString(cursor.getColumnIndex("precio"));
+                String telefonof = cursor.getString(cursor.getColumnIndex("cantidad"));
+                String correof = cursor.getString(cursor.getColumnIndex("total"));
+                // Inflar el TableRow desde el archivo de diseño
+                LayoutInflater inflater = LayoutInflater.from(this);
+                TableRow tableRow = (TableRow) inflater.inflate(R.layout.tl_itemsfactura, tableLayout, false);
+                // Obtener los TextViews del TableRow inflado
+                TextView tvcodigo = tableRow.findViewById(R.id.tvCedulaClienterow);
+                TextView tvnombre = tableRow.findViewById(R.id.tvNombreClienterow);
+                TextView tvprecio = tableRow.findViewById(R.id.tvDireccionClienterow);
+                TextView tvcantidad = tableRow.findViewById(R.id.tvTelefonoClienterow);
+                TextView tvtotal = tableRow.findViewById(R.id.tvCorreoClienterow);
+                // Establecer los datos en los TextViews
+                tvcodigo.setText(cedulaf);
+                tvnombre.setText(nombref);
+                tvprecio.setText(apellidof);
+                tvcantidad.setText(telefonof);
+                tvtotal.setText(correof);
+                // Agregar el TableRow al TableLayout
+                tableLayout.addView(tableRow);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+    }
+/*
     private void llenartabla3() {
         // Obtener una referencia a la base de datos
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
@@ -199,5 +283,5 @@ public class FacturaActivity extends AppCompatActivity {
         }
         cursor.close();
         db.close();
-    }
+    }*/
 }

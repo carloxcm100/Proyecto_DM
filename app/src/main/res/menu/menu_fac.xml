@@ -25,4 +25,11 @@
         android:title="@string/eliminar"
         android:visible="true" />
 
+    <item
+        android:id="@+id/menudatosclientes"
+        android:enabled="true"
+        android:iconTint="#000000"
+        android:title="@string/datosClientes"
+        android:visible="true" />
+
 </menu>
