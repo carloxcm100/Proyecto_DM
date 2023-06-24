@@ -223,11 +223,11 @@ public class FacturaActivity extends AppCompatActivity {
                 LayoutInflater inflater = LayoutInflater.from(this);
                 TableRow tableRow = (TableRow) inflater.inflate(R.layout.tl_itemsfactura, tableLayout, false);
                 // Obtener los TextViews del TableRow inflado
-                TextView tvcodigo = tableRow.findViewById(R.id.tvCedulaClienterow);
-                TextView tvnombre = tableRow.findViewById(R.id.tvNombreClienterow);
-                TextView tvprecio = tableRow.findViewById(R.id.tvDireccionClienterow);
-                TextView tvcantidad = tableRow.findViewById(R.id.tvTelefonoClienterow);
-                TextView tvtotal = tableRow.findViewById(R.id.tvCorreoClienterow);
+                TextView tvcodigo = tableRow.findViewById(R.id.tvcodigorow);
+                TextView tvnombre = tableRow.findViewById(R.id.tvnombrerow);
+                TextView tvprecio = tableRow.findViewById(R.id.tvpreciorow);
+                TextView tvcantidad = tableRow.findViewById(R.id.tvcantidadrow);
+                TextView tvtotal = tableRow.findViewById(R.id.tvtotalrow);
                 // Establecer los datos en los TextViews
                 tvcodigo.setText(cedulaf);
                 tvnombre.setText(nombref);
@@ -241,47 +241,4 @@ public class FacturaActivity extends AppCompatActivity {
         cursor.close();
         db.close();
     }
-/*
-    private void llenartabla3() {
-        // Obtener una referencia a la base de datos
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        // Definir las columnas que se desean obtener
-        String[] columns = {"cedularuc", "nombresconsumidor", "apellidosconsumidor", "telefonoconsumidor", "correoconsumidor"};
-        // Realizar la consulta a la base de datos
-        Cursor cursor = db.query("consumidor", columns, null, null, null, null, null);
-        // Obtener una referencia al TableLayout existente en tu diseño
-        TableLayout tableLayout = findViewById(R.id.tlfactura);
-        // Limpiar el TableLayout antes de llenarlo nuevamente
-        tableLayout.removeAllViews();
-        // Verificar si se encontraron datos
-        if (cursor.moveToFirst()) {
-            do {
-                // Obtener los datos de la fila actual
-                String cedulaf = cursor.getString(cursor.getColumnIndex("cedularuc"));
-                String nombref = cursor.getString(cursor.getColumnIndex("nombresconsumidor"));
-                String apellidof = cursor.getString(cursor.getColumnIndex("apellidosconsumidor"));
-                String telefonof = cursor.getString(cursor.getColumnIndex("telefonoconsumidor"));
-                String correof = cursor.getString(cursor.getColumnIndex("correoconsumidor"));
-                // Inflar el TableRow desde el archivo de diseño
-                LayoutInflater inflater = LayoutInflater.from(this);
-                TableRow tableRow = (TableRow) inflater.inflate(R.layout.tl_itemsfactura, tableLayout, false);
-                // Obtener los TextViews del TableRow inflado
-                TextView tvcodigo = tableRow.findViewById(R.id.tvCodigorow);
-                TextView tvnombre = tableRow.findViewById(R.id.tvNombrerow);
-                TextView tvprecio = tableRow.findViewById(R.id.tvPreciorow);
-                TextView tvcantidad = tableRow.findViewById(R.id.tvCantidadrow);
-                TextView tvtotal = tableRow.findViewById(R.id.tvTotalrow);
-                // Establecer los datos en los TextViews
-                tvcodigo.setText(cedulaf);
-                tvnombre.setText(nombref);
-                tvprecio.setText(apellidof);
-                tvcantidad.setText(telefonof);
-                tvtotal.setText(correof);
-                // Agregar el TableRow al TableLayout
-                tableLayout.addView(tableRow);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-    }*/
 }

@@ -5,37 +5,38 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvCedulaClienterow"
+        android:id="@+id/tvcodigorow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".25"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/tvNombreClienterow"
+        android:id="@+id/tvnombrerow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".40"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/tvDireccionClienterow"
+        android:id="@+id/tvpreciorow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".25"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/tvTelefonoClienterow"
+        android:id="@+id/tvcantidadrow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".10"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/tvCorreoClienterow"
+        android:id="@+id/tvtotalrow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".25"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textAlignment="center" />
 </TableRow>
